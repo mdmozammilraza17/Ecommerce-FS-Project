@@ -9,7 +9,7 @@
         <module name="service-registry" />
         <module name="user-service" />
       </profile>
-      <profile name="Annotation profile for api-gateway" enabled="true">
+      <profile name="Annotation profile for payment-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,8 +18,8 @@
         </processorPath>
         <module name="config-server" />
         <module name="auth-service" />
-        <module name="inventory-service" />
         <module name="payment-service" />
+        <module name="inventory-service" />
         <module name="api-gateway" />
         <module name="product-service" />
         <module name="order-service" />

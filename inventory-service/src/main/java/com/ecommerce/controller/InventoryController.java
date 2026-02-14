@@ -1,17 +1,18 @@
-package com.ecommerce.user_service.controller;
+package com.ecommerce.controller;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping ("/api/users")
-public class UserController {
+@RequestMapping ("/api/inventory")
+public class InventoryController {
 
     @GetMapping ("/get")
-    public String getUser ()
+    public String getInventory ()
     {
-        return "This is user";
+        return "This is inventory";
     }
 
 }
