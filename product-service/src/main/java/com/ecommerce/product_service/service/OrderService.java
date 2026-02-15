@@ -14,7 +14,7 @@ public class OrderService {
 
     public String callUserService ()
     {
-        String provideUrl = "http://USER-SERVICE/get/user";
+        String provideUrl = "http://USER-SERVICE/api/users/get";
         return restTemplate.getForObject(provideUrl, String.class);
     }
 }
