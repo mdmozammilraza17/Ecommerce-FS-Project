@@ -3,11 +3,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class OrderService {
+public class ProductService {
 
     final RestTemplate restTemplate;
 
-    public OrderService(RestTemplate restTemplate) {
+    public ProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
