@@ -1,4 +1,5 @@
 package com.ecommerce.product_service.service;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,9 +13,14 @@ public class ProductService {
     }
 
 
+    @CircuitBreaker(name = "userServices", fallbackMethod = "fallbackUser")
     public String callUserService ()
     {
         String provideUrl = "http://USER-SERVICE/api/users/get";
         return restTemplate.getForObject(provideUrl, String.class);
+    }
+
+    public String fallbackUser(Exception ex) {
+        return "User service is currently unavailable";
     }
 }
