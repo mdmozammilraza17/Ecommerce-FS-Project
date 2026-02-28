@@ -12,6 +12,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+#Resilience4j implementation
 resilience4j:
   circuitbreaker:
     instances:
@@ -24,3 +25,15 @@ resilience4j:
         failureRateThreshold: 50
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: count_based
+
+#Actuator implementation
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
