@@ -30,6 +30,12 @@ resilience4j:
       userServices:
         maxAttempts: 5
         waitDuration: 2s
+  ratelimiter:
+    instances:
+      userServices:
+        timeoutDuration: 0
+        limitRefreshPeriod: 4s
+        limitForPeriod: 2
 
 #Actuator implementation
 management:
