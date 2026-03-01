@@ -25,6 +25,11 @@ resilience4j:
         failureRateThreshold: 50
         automaticTransitionFromOpenToHalfOpenEnabled: true
         slidingWindowType: count_based
+  retry:
+    instances:
+      userServices:
+        maxAttempts: 5
+        waitDuration: 2s
 
 #Actuator implementation
 management:

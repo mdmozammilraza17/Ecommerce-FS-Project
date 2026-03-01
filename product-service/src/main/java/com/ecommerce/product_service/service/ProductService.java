@@ -1,5 +1,6 @@
 package com.ecommerce.product_service.service;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,7 @@ public class ProductService {
 
 
     @CircuitBreaker(name = "userServices", fallbackMethod = "fallbackUser")
+    @Retry(name = "userServices")
     public String callUserService ()
     {
         String provideUrl = "http://USER-SERVICE/api/users/get";
