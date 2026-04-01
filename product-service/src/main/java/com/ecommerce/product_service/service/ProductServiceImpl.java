@@ -4,11 +4,11 @@ import com.ecommerce.product_service.dto.Product;
 import com.ecommerce.product_service.dto.ProductDTO;
 import com.ecommerce.product_service.entity.ProductEntity;
 import com.ecommerce.product_service.kafka.producer.ProductProducer;
+import com.ecommerce.product_service.mapper.ProductMapper;
 import com.ecommerce.product_service.repository.ProductRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,17 +22,18 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final ModelMapper modelMapper;
 
     final RestTemplate restTemplate;
 
     private final ProductProducer productProducer;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, RestTemplate restTemplate, ProductProducer productProducer) {
+    private final ProductMapper productMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository, RestTemplate restTemplate, ProductProducer productProducer, ProductMapper productMapper) {
         this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
         this.restTemplate = restTemplate;
         this.productProducer = productProducer;
+        this.productMapper = productMapper;
     }
 
 
@@ -58,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
         
         // DTO to Entity
-        ProductEntity productEntity = modelMapper.map(productDTO, ProductEntity.class);
+        ProductEntity productEntity = productMapper.toEntity(productDTO);
         productEntity.setActive(true);
 
         // Save product
@@ -83,6 +84,6 @@ public class ProductServiceImpl implements ProductService {
         productProducer.sendProduct(product);
 
         // Return as Entity to DTO
-        return modelMapper.map(savedProduct, ProductDTO.class);
+        return productMapper.toDTO(savedProduct);
     }
 }

@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ProductService {
 
-    public ProductDTO createProduct (@RequestBody ProductDTO productDTO);
+    public ProductDTO createProduct (ProductDTO productDTO);
 }
