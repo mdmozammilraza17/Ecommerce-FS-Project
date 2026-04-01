@@ -1,8 +1,9 @@
 package com.ecommerce.product_service.service;
-import com.ecommerce.product_service.controller.ProductController;
+
+import com.ecommerce.product_service.dto.Product;
 import com.ecommerce.product_service.dto.ProductDTO;
 import com.ecommerce.product_service.entity.ProductEntity;
-import com.ecommerce.product_service.mapper.ModelMapperConfig;
+import com.ecommerce.product_service.kafka.producer.ProductProducer;
 import com.ecommerce.product_service.repository.ProductRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
@@ -10,6 +11,10 @@ import io.github.resilience4j.retry.annotation.Retry;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.ByteBuffer;
 
 
 @Service
@@ -21,10 +26,13 @@ public class ProductServiceImpl implements ProductService {
 
     final RestTemplate restTemplate;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, RestTemplate restTemplate) {
+    private final ProductProducer productProducer;
+
+    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, RestTemplate restTemplate, ProductProducer productProducer) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
         this.restTemplate = restTemplate;
+        this.productProducer = productProducer;
     }
 
 
@@ -55,7 +63,25 @@ public class ProductServiceImpl implements ProductService {
 
         // Save product
         ProductEntity savedProduct = productRepository.save(productEntity);
-        
+
+        // Prepare Avro Product
+        BigDecimal price = productDTO.getPrice().setScale(2, RoundingMode.HALF_UP);
+        ByteBuffer priceBuffer = ByteBuffer.wrap(price.unscaledValue().toByteArray());
+
+        Product product = Product.newBuilder()
+                .setProductId(savedProduct.getProductId())
+                .setProductName(productDTO.getProductName())
+                .setDescription(productDTO.getDescription())
+                .setBrand(productDTO.getBrand())
+                .setCategory(productDTO.getCategory())
+                .setQuantity(productDTO.getQuantity())
+                .setPrice(priceBuffer)
+                .setImageUrl(productDTO.getImageUrl())
+                .build();
+
+        // Send to Kafka
+        productProducer.sendProduct(product);
+
         // Return as Entity to DTO
         return modelMapper.map(savedProduct, ProductDTO.class);
     }
