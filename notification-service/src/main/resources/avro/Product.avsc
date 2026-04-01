@@ -1,0 +1,43 @@
+{
+  "type": "record",
+  "name": "Product",
+  "namespace": "com.ecommerce.product_service.dto",
+  "fields": [
+    {
+      "name": "productId",
+      "type": ["null", "long"],
+      "default": null
+    },
+    {
+      "name": "productName",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "name": "brand",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": "bytes",
+      "logicalType": "decimal",
+      "precision": 10,
+      "scale": 2
+    },
+    {
+      "name": "quantity",
+      "type": "int"
+    },
+    {
+      "name": "category",
+      "type": "string"
+    },
+    {
+      "name": "imageUrl",
+      "type": "string"
+    }
+  ]
+}
