@@ -2,6 +2,17 @@ spring:
   application:
     name: user-service
 
+  datasource:
+    url: jdbc:mysql://localhost:3307/userdb
+    username: root
+    password: root123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 server:
   port: 8081
 

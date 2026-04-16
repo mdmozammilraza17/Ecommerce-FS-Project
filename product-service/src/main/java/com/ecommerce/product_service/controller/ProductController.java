@@ -31,4 +31,10 @@ public class ProductController {
         ProductDTO savedProduct = productService.createProduct(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
+
+    @GetMapping ("/about")
+    public String getAbout ()
+    {
+        return "This is unauthenticated because this is about";
+    }
 }
