@@ -3,17 +3,17 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: productdb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: productdb
       MYSQL_USER: user
       MYSQL_PASSWORD: Mozammil
     ports:
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ../../mysql-init:/docker-entrypoint-initdb.d
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
