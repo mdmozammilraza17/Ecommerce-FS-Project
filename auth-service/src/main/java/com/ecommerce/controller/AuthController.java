@@ -1,61 +1,50 @@
 package com.ecommerce.controller;
 
-import com.ecommerce.config.PasswordConfig;
-import com.ecommerce.dto.AuthResponseDTO;
-import com.ecommerce.dto.UserRequestDTO;
-import com.ecommerce.service.AuthUserDetailsService;
-import com.ecommerce.util.JwtUtil;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.ecommerce.dto.AuthRequestDTO;
+import com.ecommerce.service.AuthService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping ("/api/auth")
 public class AuthController {
 
-    private final AuthUserDetailsService authUserDetailsService;
-    private final PasswordConfig passwordConfig;
-    private final JwtUtil jwtUtil;
+    private final AuthService authService;
 
-    public AuthController(AuthUserDetailsService authUserDetailsService, PasswordConfig passwordConfig, JwtUtil jwtUtil) {
-        this.authUserDetailsService = authUserDetailsService;
-        this.passwordConfig = passwordConfig;
-        this.jwtUtil = jwtUtil;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthController(AuthService authService, AuthenticationManager authenticationManager) {
+        this.authService = authService;
+        this.authenticationManager = authenticationManager;
     }
 
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody UserRequestDTO request) {
+    @PostMapping("/token")
+    public String getToken (@RequestBody AuthRequestDTO authRequestDTO)
+    {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
 
-        UserDetails userDetails =
-                authUserDetailsService.loadUserByUsername(request.getUsername());
-
-        if (!passwordConfig.passwordEncoder().matches(
-                request.getPassword(),
-                userDetails.getPassword()
-        )) {
-            throw new RuntimeException("Invalid password!");
+        if (authenticate.isAuthenticated())
+        {
+            return authService.generateToken(authRequestDTO.getUsername());
         }
-
-        String role = userDetails.getAuthorities()
-                .iterator()
-                .next()
-                .getAuthority();
-
-        String token = jwtUtil.generateToken(
-                userDetails.getUsername(),
-                role
-        );
-
-        AuthResponseDTO response = new AuthResponseDTO();
-        response.setToken(token);
-        response.setUsername(userDetails.getUsername());
-        response.setRole(role);
-
-        return ResponseEntity.ok(response);
+        else
+        {
+            throw new RuntimeException("credential invalid");
+        }
     }
 
-
+    @GetMapping("/validate")
+    public String validateToken(@RequestParam("token") String token) {
+        try {
+            authService.validateToken(token);
+            return "Valid Token ✅";
+        } catch (Exception e) {
+            return "Invalid Token ❌";
+        }
+    }
     @GetMapping ("/get")
     public String getAuth ()
     {

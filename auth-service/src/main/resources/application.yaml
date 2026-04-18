@@ -15,5 +15,5 @@ eureka:
     prefer-ip-address: true
 
 jwt:
-  secret: ${JWT_SECRET:defaultSecretKey123}
+  secret: ${JWT_SECRET:ThisIsAVeryStrongSecretKeyForJwtAuthentication1234567890}
   expiration: ${JWT_EXPIRATION:3600000}

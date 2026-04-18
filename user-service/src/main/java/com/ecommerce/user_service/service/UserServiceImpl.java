@@ -6,6 +6,7 @@ import com.ecommerce.user_service.entity.User;
 import com.ecommerce.user_service.mapper.UserMapper;
 import com.ecommerce.user_service.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,11 +16,12 @@ public class UserServiceImpl implements UserService{
 
     private final UserMapper userMapper;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService{
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
 
         User userEntity = userMapper.toEntity(userRequestDTO);
-        userEntity.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         userEntity.setRole("CUSTOMER");
 
 
