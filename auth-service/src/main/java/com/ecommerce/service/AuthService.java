@@ -16,9 +16,9 @@ public class AuthService {
         this.userClient = userClient;
     }
 
-    public String generateToken (String username)
+    public String generateToken (String username, String role)
     {
-        return jwtService.generateToken(username);
+        return jwtService.generateToken(username, role);
     }
 
     public void validateToken (String token)

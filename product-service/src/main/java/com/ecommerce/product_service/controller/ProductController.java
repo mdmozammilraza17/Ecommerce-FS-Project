@@ -6,6 +6,7 @@ import com.ecommerce.product_service.entity.ProductEntity;
 import com.ecommerce.product_service.service.ProductServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +26,9 @@ public class ProductController {
         return "This is called by Product Controller: "+productService.callUserService();
     }
 
+
+    // Create a product
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/create/product")
     public ResponseEntity<ProductDTO> createProduct (@RequestBody ProductDTO productDTO)
     {
