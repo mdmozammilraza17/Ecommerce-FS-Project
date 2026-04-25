@@ -25,9 +25,7 @@ public class JwtUtil {
         return claimsJws;
     }
 
-    private Key getSignKey ()
-    {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+    private Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 }

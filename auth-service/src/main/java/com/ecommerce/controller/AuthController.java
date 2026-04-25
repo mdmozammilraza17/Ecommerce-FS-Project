@@ -1,10 +1,12 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.dto.AuthRequestDTO;
+import com.ecommerce.dto.AuthResponseDTO;
 import com.ecommerce.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,18 +22,31 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
-
     @PostMapping("/token")
-    public String getToken (@RequestBody AuthRequestDTO authRequestDTO)
-    {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
+    public AuthResponseDTO getToken(@RequestBody AuthRequestDTO authRequestDTO) {
 
-        if (authenticate.isAuthenticated())
-        {
-            return authService.generateToken(authRequestDTO.getUsername());
-        }
-        else
-        {
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        authRequestDTO.getUsername(),
+                        authRequestDTO.getPassword()
+                )
+        );
+
+        if (authenticate.isAuthenticated()) {
+
+            UserDetails userDetails = (UserDetails) authenticate.getPrincipal();
+
+            String role = userDetails.getAuthorities()
+                    .stream()
+                    .findFirst()
+                    .get()
+                    .getAuthority()
+                    .replace("ROLE_", ""); // ADMIN / USER
+
+            String token = authService.generateToken(userDetails.getUsername(), role);
+
+            return new AuthResponseDTO(token, userDetails.getUsername(), role);
+        } else {
             throw new RuntimeException("credential invalid");
         }
     }

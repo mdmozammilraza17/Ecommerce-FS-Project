@@ -24,7 +24,8 @@ public class CustomDetailsService implements UserDetailsService {
 
             return new CustomUserDetails(
                     user.getUsername(),
-                    user.getPassword()
+                    user.getPassword(),
+                    user.getRole()
             );
 
         } catch (Exception e) {
