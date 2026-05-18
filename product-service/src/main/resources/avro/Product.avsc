@@ -18,26 +18,36 @@
     },
     {
       "name": "brand",
-      "type": "string"
+      "type": ["null", "string"],
+      "default": null
     },
     {
       "name": "price",
-      "type": "bytes",
-      "logicalType": "decimal",
-      "precision": 10,
-      "scale": 2
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
     },
     {
       "name": "quantity",
       "type": "int"
     },
     {
-      "name": "category",
-      "type": "string"
+      "name": "categoryId",
+      "type": ["null", "long"],
+      "default": null
     },
     {
-      "name": "imageUrl",
-      "type": "string"
+      "name": "active",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name": "sku",
+      "type": ["null", "string"],
+      "default": null
     }
   ]
 }

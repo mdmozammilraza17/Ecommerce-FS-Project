@@ -16,7 +16,7 @@ import java.util.Map;
 @Component
 public class JwtService {
 
-    public static final String SECRET = "mysupersecretkey1234567890mysupersecretkey1234567890";
+    private static final String SECRET = "mysupersecretkey1234567890mysupersecretkey1234567890";
 
     // Validate Token
     public Jws<Claims> validateToken (final  String token)
