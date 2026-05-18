@@ -1,7 +1,7 @@
 package com.ecommerce.product_service.service;
 
-import com.ecommerce.product_service.dto.Product;
-import com.ecommerce.product_service.dto.ProductDTO;
+import com.ecommerce.product_service.config.CategoryClient;
+import com.ecommerce.product_service.dto.*;
 import com.ecommerce.product_service.entity.ProductEntity;
 import com.ecommerce.product_service.kafka.producer.ProductProducer;
 import com.ecommerce.product_service.mapper.ProductMapper;
@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 
 @Service
@@ -22,29 +23,19 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-
-    final RestTemplate restTemplate;
+    private final CategoryClient categoryClient;
 
     private final ProductProducer productProducer;
 
     private final ProductMapper productMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, RestTemplate restTemplate, ProductProducer productProducer, ProductMapper productMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryClient categoryClient, ProductProducer productProducer, ProductMapper productMapper) {
         this.productRepository = productRepository;
-        this.restTemplate = restTemplate;
+        this.categoryClient = categoryClient;
         this.productProducer = productProducer;
         this.productMapper = productMapper;
     }
 
-
-    @CircuitBreaker(name = "userServices", fallbackMethod = "fallbackUser")
-    @Retry(name = "userServices")
-    @RateLimiter(name = "userServices", fallbackMethod = "fallbackRateLimitMsg")
-    public String callUserService ()
-    {
-        String provideUrl = "http://USER-SERVICE/api/users/get";
-        return restTemplate.getForObject(provideUrl, String.class);
-    }
 
     public String fallbackUser(Exception ex) {
         return "User service is currently unavailable";
@@ -56,34 +47,58 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        
+    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
+
         // DTO to Entity
-        ProductEntity productEntity = productMapper.toEntity(productDTO);
+        ProductEntity productEntity = productMapper.toEntity(productRequestDTO);
         productEntity.setActive(true);
 
         // Save product
         ProductEntity savedProduct = productRepository.save(productEntity);
 
         // Prepare Avro Product
-        BigDecimal price = productDTO.getPrice().setScale(2, RoundingMode.HALF_UP);
+        BigDecimal price = savedProduct.getPrice().setScale(2, RoundingMode.HALF_UP);
         ByteBuffer priceBuffer = ByteBuffer.wrap(price.unscaledValue().toByteArray());
 
         Product product = Product.newBuilder()
                 .setProductId(savedProduct.getProductId())
-                .setProductName(productDTO.getProductName())
-                .setDescription(productDTO.getDescription())
-                .setBrand(productDTO.getBrand())
-                .setCategory(productDTO.getCategory())
-                .setQuantity(productDTO.getQuantity())
+                .setProductName(savedProduct.getProductName())
+                .setDescription(savedProduct.getDescription())
+                .setBrand(savedProduct.getBrand())
+                .setQuantity(savedProduct.getQuantity())
+                .setCategoryId(savedProduct.getCategoryId())
                 .setPrice(priceBuffer)
-                .setImageUrl(productDTO.getImageUrl())
+                .setSku(savedProduct.getSku())
                 .build();
 
         // Send to Kafka
         productProducer.sendProduct(product);
 
-        // Return as Entity to DTO
-        return productMapper.toDTO(savedProduct);
+        // Entity → ResponseDTO
+        ProductResponseDTO responseDTO = productMapper.toDTO(savedProduct);
+
+        return responseDTO;
+    }
+
+    @Override
+    public ProductResponseDTO getProductById(Long id) {
+        ProductEntity product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        ProductResponseDTO dto = productMapper.toDTO(product);
+
+        // Call category
+        CategoryResponseDTO category = categoryClient.getCategoryById(product.getCategoryId());
+
+        System.out.println("Category Response: " + category);
+
+        dto.setCategoryResponseDTO(category);
+
+        return dto;
+    }
+
+    @Override
+    public List<ProductResponseDTO> getAllProducts() {
+        return List.of();
     }
 }

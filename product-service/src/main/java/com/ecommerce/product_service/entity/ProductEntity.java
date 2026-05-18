@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity (name = "product_table")
+@Entity (name = "products")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +23,8 @@ public class ProductEntity {
     @Column (nullable = false, length = 250)
     private String description;
 
+    private BigDecimal discountPrice;
+
     @Column (nullable = false, length = 60)
     private String brand;
 
@@ -33,17 +35,16 @@ public class ProductEntity {
     private Integer quantity;
 
     @Column (nullable = false)
-    private String category;
-
-    @Column (nullable = false)
-    private String imageUrl;
+    private Long categoryId;
 
     @Column (nullable = false)
     private boolean active;
 
+    private String sku;
+
     @CreationTimestamp
     @Column (updatable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;

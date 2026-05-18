@@ -21,8 +21,12 @@ public class ProductDTO {
 
     private Integer quantity;
 
-    private String category;
+    private Long categoryId;
 
     private String imageUrl;
+
+    private boolean active;
+
+    private CategoryResponseDTO categoryResponseDTO;
 
 }
