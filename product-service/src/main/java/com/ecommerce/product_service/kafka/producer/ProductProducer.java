@@ -1,6 +1,5 @@
 package com.ecommerce.product_service.kafka.producer;
 
-
 import com.ecommerce.product_service.dto.Product;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

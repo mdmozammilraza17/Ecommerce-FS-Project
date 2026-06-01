@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-261.23567.138">
+    <data-source name="categoriesdb@localhost" uuid="9fe00135-35a8-4796-9a9e-88027ce2eb27">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="userdb@localhost" uuid="a6ce4c13-3783-4c5d-93bf-68774f29318a">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="productdb@localhost" uuid="0582ff1d-4850-4e0a-80d5-6b033d5501cf">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

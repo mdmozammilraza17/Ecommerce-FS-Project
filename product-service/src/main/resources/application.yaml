@@ -71,3 +71,8 @@ management:
   health:
     circuitbreakers:
       enabled: true
+
+#Zipkin
+  tracing:
+    sampling:
+      probability: 1.0

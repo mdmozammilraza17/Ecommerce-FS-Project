@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping ("/api/inventory")
+@RequestMapping("/api/inventory")
 public class InventoryController {
 
-    @GetMapping ("/get")
+    @GetMapping("/get")
     public String getInventory ()
     {
         return "This is inventory";

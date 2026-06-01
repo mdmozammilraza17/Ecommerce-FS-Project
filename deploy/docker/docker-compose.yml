@@ -67,5 +67,13 @@ services:
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       PORT: 9021
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    environment:
+      STORAGE_TYPE: mem
+
 volumes:
   mysql-data:
