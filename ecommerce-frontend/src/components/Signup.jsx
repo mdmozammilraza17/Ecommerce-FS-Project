@@ -1,7 +1,8 @@
 import ImageBasket from "../assets/women-shopping.png";
-
+import { useNavigate } from "react-router-dom";
 export default function SignUp ({onLogin})
 {
+    const navigate = useNavigate();
     return (
         <>
             <div className="login-container">
@@ -31,7 +32,7 @@ export default function SignUp ({onLogin})
                                 </div>
                                 <button>Create Account</button>
                                 <p id="already-account">Already have an account?</p>
-                                <button onClick={onLogin} id="login-button">Log In</button>
+                                <button onClick={() => navigate("/login")} id="login-button">Log In</button>
                                 
                             </div>
                         </div>
