@@ -1,30 +1,14 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/Signup";
 
-
-export default function App ()
-{
-  const [showSignup, setSignup] = useState(false);
-  function handleShowSignup ()
-    {
-        setSignup(true);
-    }
-
-  function handleShowLogin ()
-  {
-    setSignup(false);
-  }
-
+export default function App() {
   return (
-
-   <>
-      {showSignup ? (
-        <SignUp  onLogin={handleShowLogin} />
-      ) : (
-        <Login onSignUp={handleShowSignup} />
-      )
-      }
-    </>
-  )
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
+  );
 }

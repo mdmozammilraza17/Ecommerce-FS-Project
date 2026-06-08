@@ -1,8 +1,8 @@
-import { useState } from "react";
-import "./login.css";
+import "./Login.css";
+import { useNavigate } from "react-router-dom";
 import ImageBasket from "../assets/women-shopping.png";
-import SignUp from "./Signup";
 export default function Login({onSignUp}) {
+    const navigate = useNavigate();
 
     return (
         <>
@@ -25,7 +25,8 @@ export default function Login({onSignUp}) {
                     </div>
                     <button>Log In</button>
                     <a href="#" id="forget-password">Forgot Password?</a>
-                    <button onClick={onSignUp}>Create Account</button>
+                    <button onClick={()=> navigate("/signup")}>
+                        Create Account</button>
                 </div>
             </div>
         </>
