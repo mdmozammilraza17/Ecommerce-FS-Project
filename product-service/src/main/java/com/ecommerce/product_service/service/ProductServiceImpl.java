@@ -90,8 +90,6 @@ public class ProductServiceImpl implements ProductService {
         // Call category
         CategoryResponseDTO category = categoryClient.getCategoryById(product.getCategoryId());
 
-        System.out.println("Category Response: " + category);
-
         dto.setCategoryResponseDTO(category);
 
         return dto;
