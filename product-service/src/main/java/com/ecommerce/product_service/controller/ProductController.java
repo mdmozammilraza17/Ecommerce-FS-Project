@@ -1,11 +1,13 @@
 package com.ecommerce.product_service.controller;
 
+import com.ecommerce.product_service.dto.PageResponseDTO;
 import com.ecommerce.product_service.dto.ProductDTO;
 import com.ecommerce.product_service.dto.ProductRequestDTO;
 import com.ecommerce.product_service.dto.ProductResponseDTO;
 import com.ecommerce.product_service.service.ProductService;
 import com.ecommerce.product_service.service.ProductServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,10 +46,15 @@ public class ProductController {
 
     //  Get All Products
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
+    public ResponseEntity<PageResponseDTO<ProductResponseDTO>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "productId") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
 
-        return ResponseEntity.ok(productService.getAllProducts());
+        return ResponseEntity.ok(productService.getAllProducts(page, size, sortBy, sortDir));
     }
+
     @GetMapping ("/public/about")
     public String getAbout ()
     {

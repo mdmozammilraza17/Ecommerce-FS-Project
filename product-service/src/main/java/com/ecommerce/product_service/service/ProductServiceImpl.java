@@ -9,13 +9,20 @@ import com.ecommerce.product_service.repository.ProductRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.ByteBuffer;
+import java.util.Collections;
 import java.util.List;
+
+import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
 
 @Service
@@ -96,7 +103,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponseDTO> getAllProducts() {
-        return List.of();
+    public PageResponseDTO<ProductResponseDTO> getAllProducts(
+            int page, int size, String sortBy, String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<ProductEntity> productPage = productRepository.findAll(pageable);
+
+        PageResponseDTO<ProductResponseDTO> response = new PageResponseDTO<>();
+
+        response.setContent(
+                productPage.getContent()
+                        .stream().map(productMapper::toDTO).toList()
+        );
+        response.setPage(productPage.getNumber());
+        response.setSize(productPage.getSize());
+        response.setTotalElements(productPage.getTotalElements());
+        response.setTotalPages(productPage.getTotalPages());
+        response.setFirst(productPage.isFirst());
+        response.setLast(productPage.isLast());
+        return response;
     }
 }
