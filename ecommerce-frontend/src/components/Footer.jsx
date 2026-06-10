@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="footer-content">
 
         <div className="footer-section">
-          <h2 className="store-name">STD General Store</h2>
+          <h2 className="store-name">STD Grocery Store</h2>
           <p className="store-desc">
             Your trusted grocery and daily needs store serving customers with
             quality products and affordable prices.
@@ -44,7 +44,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        © 2026 STD General Store. All Rights Reserved.
+        © 2026 STD Grocery Store. All Rights Reserved.
       </div>
     </footer>
   );
