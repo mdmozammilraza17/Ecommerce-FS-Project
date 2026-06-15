@@ -1,22 +1,29 @@
 package com.ecommerce.api_gateway.filter;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Set;
 import java.util.function.Predicate;
 
 @Component
 public class RouteValidator {
 
-    public static final List <String> openAPiEndpoints = List.of(
+    private static final Set<String> OPEN_API_ENDPOINTS = Set.of(
             "/api/users/register",
-            "/api/auth/token",
-            "/eureka"
+            "/api/auth/token"
     );
 
-    public Predicate<ServerHttpRequest> isSecured =
-            request -> openAPiEndpoints
-                    .stream()
-                    .noneMatch(uri -> request.getURI().getPath().contains(uri));
+    public final Predicate<ServerHttpRequest> isSecured = request -> {
+
+        // Allow CORS preflight requests
+        if (HttpMethod.OPTIONS.equals(request.getMethod())) {
+            return false;
+        }
+
+        String path = request.getURI().getPath();
+
+        return !OPEN_API_ENDPOINTS.contains(path);
+    };
 }
