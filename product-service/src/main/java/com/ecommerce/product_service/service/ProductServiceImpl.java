@@ -114,8 +114,17 @@ public class ProductServiceImpl implements ProductService {
 
         response.setContent(
                 productPage.getContent()
-                        .stream().map(productMapper::toDTO).toList()
-        );
+                        .stream().map(product ->
+                        {
+                            ProductResponseDTO dto = productMapper.toDTO(product);
+
+                            CategoryResponseDTO category = categoryClient.getCategoryById(
+                                    product.getCategoryId()
+                            );
+                            dto.setCategoryResponseDTO(category);
+                            return dto;
+                        }
+        ).toList());
         response.setPage(productPage.getNumber());
         response.setSize(productPage.getSize());
         response.setTotalElements(productPage.getTotalElements());
