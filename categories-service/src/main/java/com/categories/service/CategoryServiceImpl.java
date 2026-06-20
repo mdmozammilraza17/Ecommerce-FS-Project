@@ -4,6 +4,7 @@ import com.categories.dto.CategoryRequestDTO;
 import com.categories.dto.CategoryResponseDTO;
 import com.categories.dto.CategoryTreeDTO;
 import com.categories.entity.Category;
+import com.categories.exception.CategoryNotFound;
 import com.categories.mapper.CategoryMapper;
 import com.categories.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDTO getCategoryById(Long id) {
         Category category = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new CategoryNotFound("Category not found with id: "+id));
 
         return mapper.toResponseDTO(category);
     }

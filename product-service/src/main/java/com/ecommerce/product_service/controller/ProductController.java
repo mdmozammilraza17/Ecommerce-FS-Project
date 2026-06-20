@@ -4,6 +4,7 @@ import com.ecommerce.product_service.dto.PageResponseDTO;
 import com.ecommerce.product_service.dto.ProductDTO;
 import com.ecommerce.product_service.dto.ProductRequestDTO;
 import com.ecommerce.product_service.dto.ProductResponseDTO;
+import com.ecommerce.product_service.exception.CategoryServiceUnavailableException;
 import com.ecommerce.product_service.service.ProductService;
 import com.ecommerce.product_service.service.ProductServiceImpl;
 import jakarta.validation.Valid;
@@ -29,8 +30,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct (
-            @Valid @RequestBody ProductRequestDTO dto)
-    {
+            @Valid @RequestBody ProductRequestDTO dto) throws CategoryServiceUnavailableException {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(productService.createProduct(dto));
