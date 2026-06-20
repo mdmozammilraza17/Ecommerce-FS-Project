@@ -3,23 +3,18 @@ package com.ecommerce.product_service.service;
 import com.ecommerce.product_service.config.CategoryClient;
 import com.ecommerce.product_service.dto.*;
 import com.ecommerce.product_service.entity.ProductEntity;
+import com.ecommerce.product_service.exception.CategoryNotFound;
+import com.ecommerce.product_service.exception.CategoryServiceUnavailableException;
 import com.ecommerce.product_service.kafka.producer.ProductProducer;
 import com.ecommerce.product_service.mapper.ProductMapper;
 import com.ecommerce.product_service.repository.ProductRepository;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
+import feign.FeignException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.ByteBuffer;
-import java.util.Collections;
-import java.util.List;
-
-import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
 
 @Service
@@ -51,7 +46,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
+    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) throws CategoryServiceUnavailableException {
+
+        CategoryResponseDTO category;
+
+        try {
+            category = categoryClient
+                    .getCategoryById(productRequestDTO.getCategoryId());
+
+            if (category == null) {
+                throw new CategoryNotFound(
+                        "Category not found with id: "
+                                + productRequestDTO.getCategoryId());
+            }
+        }
+        catch (FeignException.NotFound ex)
+        {
+            throw new CategoryNotFound("Category not found with id: " +
+                    productRequestDTO.getCategoryId());
+        }
+        catch (FeignException ex)
+        {
+            throw new CategoryServiceUnavailableException(
+                    "Unable to communicate with Category Service"
+            );
+        }
 
         // DTO to Entity
         ProductEntity productEntity = productMapper.toEntity(productRequestDTO);
@@ -80,6 +99,7 @@ public class ProductServiceImpl implements ProductService {
 
         // Entity → ResponseDTO
         ProductResponseDTO responseDTO = productMapper.toDTO(savedProduct);
+        responseDTO.setCategoryResponseDTO(category);
 
         return responseDTO;
     }
