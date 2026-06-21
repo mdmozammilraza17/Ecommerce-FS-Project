@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import ProfileDropdown from "./ProfileDropdown";
+import BannerSlider from "./BannerSlider";
 
 export default function Home() {
 
@@ -110,8 +111,8 @@ export default function Home() {
             </div>
           )
         }
-
       </header>
+      <BannerSlider/>
 
       <Footer />
     </>
