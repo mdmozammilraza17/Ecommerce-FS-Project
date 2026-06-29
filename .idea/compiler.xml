@@ -12,6 +12,7 @@
         <module name="user-service" />
         <module name="service-registry" />
         <module name="notification-service" />
+        <module name="banner-service" />
       </profile>
       <profile name="Annotation profile for categories-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -45,6 +46,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
+      <module name="banner-service" options="-parameters" />
       <module name="categories-service" options="-parameters" />
       <module name="common-event" options="-parameters" />
       <module name="config-server" options="-parameters" />

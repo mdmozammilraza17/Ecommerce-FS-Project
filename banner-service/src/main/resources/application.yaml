@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: banner-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/bannerdb
+    username: root
+    password: root123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+cloudinary:
+  cloud-name: ddrehk9bo
+  api-key: 521135712912896
+  api-secret: nV22lB0D9O2Wjryk1SvZAehtyOs
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 9093
