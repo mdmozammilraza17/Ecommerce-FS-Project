@@ -36,6 +36,9 @@ public class GatewayConfig {
                 .route("CATEGORIES-SERVICE", r ->
                         r.path("/api/categories/**")
                                 .uri("lb://CATEGORIES-SERVICE"))
+                .route("BANNER-SERVICE", r->
+                        r.path("/api/banner/**")
+                                .uri("lb://BANNER-SERVICE"))
                 .build();
     }
 }
