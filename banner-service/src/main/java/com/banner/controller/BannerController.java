@@ -35,7 +35,6 @@ public class BannerController {
     }
 
     // Get All Banner
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping ("/banners")
     public ResponseEntity<List<BannerResponseDTO>> getAllBanner ()
     {
