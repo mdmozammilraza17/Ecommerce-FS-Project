@@ -53,7 +53,7 @@ public class BannerServiceImpl implements BannerService{
 
     @Override
     public List<BannerResponseDTO> fetchAllBanner() {
-        List<BannerEntity> getAllBanner = bannerRepository.findAll();
+        List<BannerEntity> getAllBanner = bannerRepository.findAllByOrderByDisplayOrderAsc();
         return getAllBanner.stream()
                 .map(bannerMapper::toResponseDto).toList();
     }

@@ -29,6 +29,8 @@
 	<properties>
 		<java.version>21</java.version>
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
+		<lombok.version>1.18.30</lombok.version>
+		<mapstruct.version>1.6.3</mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,6 +50,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
 			<optional>true</optional>
 		</dependency>
 
@@ -61,13 +64,13 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.6.3</version>
+			<version>${mapstruct.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
-			<version>1.6.3</version>
+			<version>${mapstruct.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -105,11 +108,11 @@
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>com.categories</groupId>
-			<artifactId>categories-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -154,12 +157,13 @@
 								<path>
 									<groupId>org.projectlombok</groupId>
 									<artifactId>lombok</artifactId>
+									<version>${lombok.version}</version>
 								</path>
 
 								<path>
 									<groupId>org.mapstruct</groupId>
 									<artifactId>mapstruct-processor</artifactId>
-									<version>1.6.3</version>
+									<version>${mapstruct.version}</version>
 								</path>
 							</annotationProcessorPaths>
 						</configuration>
@@ -175,6 +179,7 @@
 								<path>
 									<groupId>org.projectlombok</groupId>
 									<artifactId>lombok</artifactId>
+									<version>${lombok.version}</version>
 								</path>
 							</annotationProcessorPaths>
 						</configuration>
