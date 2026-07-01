@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import ProfileDropdown from "./ProfileDropdown";
 import BannerSlider from "./BannerSlider";
+import TopInfoBar from "./TopInfoBar";
 
 export default function Home() {
 
@@ -50,6 +51,7 @@ export default function Home() {
 
   return (
     <>
+    <TopInfoBar/>
       <header className="home-container">
 
         <div className="std-log-img">
