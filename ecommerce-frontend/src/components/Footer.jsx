@@ -86,7 +86,7 @@ export default function Footer() {
 
         </div>
         <div className="bottom-footer">
-          <p>2026 STD General Store, Daltonganj. All Rights Reserved.</p>
+          <p>© 2026 STD General Store, Daltonganj. All Rights Reserved.</p>
           <div className="cards-payment">
             <img src={VisaLogo} alt="VISA logo image" />
             <img src={MASTERCARDLogo} alt="Master Logo Image" />
