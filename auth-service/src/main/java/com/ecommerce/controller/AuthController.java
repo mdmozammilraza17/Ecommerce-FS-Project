@@ -1,69 +1,43 @@
 package com.ecommerce.controller;
 
-import com.ecommerce.dto.AuthRequestDTO;
-import com.ecommerce.dto.AuthResponseDTO;
-import com.ecommerce.service.AuthService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import com.ecommerce.dto.SignupRequest;
+import com.ecommerce.dto.SignupResponse;
+import com.ecommerce.dto.VerifyOtpRequest;
+import com.ecommerce.dto.VerifyOtpResponse;
+import com.ecommerce.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping ("/api/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final UserService userService;
 
-    private final AuthenticationManager authenticationManager;
-
-    public AuthController(AuthService authService, AuthenticationManager authenticationManager) {
-        this.authService = authService;
-        this.authenticationManager = authenticationManager;
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/token")
-    public AuthResponseDTO getToken(@RequestBody AuthRequestDTO authRequestDTO) {
-
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authRequestDTO.getUsername(),
-                        authRequestDTO.getPassword()
-                )
-        );
-
-        if (authenticate.isAuthenticated()) {
-
-            UserDetails userDetails = (UserDetails) authenticate.getPrincipal();
-
-            String role = userDetails.getAuthorities()
-                    .stream()
-                    .findFirst()
-                    .get()
-                    .getAuthority()
-                    .replace("ROLE_", ""); // ADMIN / USER
-
-            String token = authService.generateToken(userDetails.getUsername(), role);
-
-            return new AuthResponseDTO(token, userDetails.getUsername(), role);
-        } else {
-            throw new RuntimeException("credential invalid");
-        }
-    }
-
-    @GetMapping("/validate")
-    public String validateToken(@RequestParam("token") String token) {
-        try {
-            authService.validateToken(token);
-            return "Valid Token ✅";
-        } catch (Exception e) {
-            return "Invalid Token ❌";
-        }
-    }
-    @GetMapping ("/get")
-    public String getAuth ()
+    // Creating User
+    @PostMapping("/signup")
+    public ResponseEntity<SignupResponse> signupUser (@Valid @RequestBody SignupRequest signupRequest)
     {
-        return "This is auth controller";
+
+        SignupResponse signupResponse = userService.signupUser(signupRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(signupResponse);
+    }
+
+    // Verify OTP
+    @PostMapping ("/verify-otp")
+    public ResponseEntity<VerifyOtpResponse> verifyOtpResponse (@Valid @RequestBody VerifyOtpRequest request)
+    {
+        VerifyOtpResponse verifyOtpResponse = userService.verifyOtp(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(verifyOtpResponse);
     }
 }
 

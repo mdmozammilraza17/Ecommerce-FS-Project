@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 public class RouteValidator {
 
     private static final Set<String> OPEN_API_ENDPOINTS = Set.of(
-            "/api/users/register",
+            "/api/auth/signup",
             "/api/auth/token"
     );
 
