@@ -67,10 +67,6 @@ public class UserServiceImpl implements UserService{
 
         }
 
-        if (userRepository.existsByPhoneNumber(signupRequest.getPhoneNumber())) {
-            throw new RuntimeException("Mobile number already exists");
-        }
-
         UserEntity userEntity = new UserEntity();
         userEntity.setFirstName(signupRequest.getFirstName());
         userEntity.setLastName(signupRequest.getLastName());
