@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import SignUp from "./components/Signup";
 import ProfileDropdown from "./components/ProfileDropdown";
 import TopInfoBar from "./components/TopInfoBar";
+import VerifyOtp from "./components/VerifyOtp";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<ProfileDropdown />} />
         <Route path="/" element={<TopInfoBar />} />
+        <Route path="/verify-otp" element={<VerifyOtp/>}/>
       </Routes>
 
       <ToastContainer
