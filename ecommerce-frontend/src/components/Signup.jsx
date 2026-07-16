@@ -85,7 +85,7 @@ export default function Signup() {
             setLoading(true);
             const response = await api.post("/api/auth/signup", formData);
             showSuccess(response.data.message);
-            
+
         }
         catch (error) {
             showError(
@@ -131,7 +131,7 @@ export default function Signup() {
                                             />
                                         </div>
                                         {errors.firstName && (
-                                            
+
                                             <small className='error-text'>
                                                 <IoCloseCircle className="error-icon" />
                                                 {errors.firstName}
@@ -236,7 +236,7 @@ export default function Signup() {
                                                 type="password" placeholder='Confirm Password'
                                                 value={formData.confirmPassword}
                                                 onChange={handleChange}
-                                                className={errors.confirmPassword ? "input-error": ""}
+                                                className={errors.confirmPassword ? "input-error" : ""}
                                             />
                                         </div>
                                         {errors.confirmPassword && (

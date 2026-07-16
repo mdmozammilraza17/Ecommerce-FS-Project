@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* OTP Verification Page CSS */
+.otp-verification-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f7fa;
+    /* optional */
+    padding: 20px;
+}
+
+
+/* OTP verification image */
+.otp-verification-image {
+    flex: 1;
+    display: flex;
+}
+
+.otp-verification-image img {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: -8px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* OTP verification right section */
+.otp-right-section {
+    flex: 1;
+    padding: 30px;
+    background: transparent;
+    text-align: center;
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.12);
+    border-radius: 0 20px 20px 0;
+}
+
+/* Email icon */
+.email-icon {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* OTP verification container */
+.otp-verification-container {
+    width: 100%;
+    min-height: 700px;
+    max-width: 1000px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: stretch;
+}
+
+
+/* Verify Email Content css */
+.verify-email-content .email-address {
+    display: flex;
+    color: #000;
+    font-weight: 600;
+    flex-direction: column;
+    line-height: 1.5;
+    margin-bottom: 20px;
+
+}
+
+.verify-email-content h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.verify-email-content p {
+    color: #666;
+}
+
+.email-address {
+    color: #000;
+    font-weight: 600;
+}
+
+/* OTP Boxes CSS */
+.otp-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.otp-boxes input {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    border: 1.5px solid #ccc;
+    font-size: 20px;
+    text-align: center;
+    outline: none;
+}
+
+.otp-boxes input:focus {
+    border: 1.5px solid #FF69B4;
+}
+
+/* Resend OTP CSS */
+.resend-otp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.resend-link {
+    color: #2e7d32;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.resend-link:hover {
+    color: #16a34a;
+    text-decoration: underline;
+}
+
+.time-sec {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+/* Secure Content CSS */
+.secure-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Secure Verification css */
+.secure-verification {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #f1f8f2;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.secure-verification p {
+    font-size: small;
+    color: #666;
+}
+
+.secure-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    background-color: #d7f1de;
+}
+
+.shield-icon {
+    font-size: 24px;
+    color: #16a34a;
+}
+
+/* Verify Button CSS */
+.verify-btn button {
+    width: 100%;
+    padding: 12px 16px;
+    background: #1b5e20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+
+/* Divider */
+.verification-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.verification-divider span {
+    background: #fff;
+    padding: 0 10px;
+    color: #777;
+    font-size: 14px;
+    z-index: 1;
+}
+
+.verification-divider::before,
+.verification-divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #ccc;
+}
+
+.verification-divider::before {
+    left: 0;
+}
+
+.verification-divider::after {
+    right: 0;
+}
+
+
+/* Google Login Button */
+
+.google-login-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+
+    padding: 12px 16px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    background: #fff;
+
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.google-login-btn:hover {
+    background: #f8f8f8;
+}
+
+.google-icon {
+    font-size: 20px;
+}
