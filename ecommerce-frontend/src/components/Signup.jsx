@@ -1,5 +1,5 @@
 import './Signup.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import FreshGroceryImg from '../assets/Fresh-Grocery-Image.png';
 import { FiCircle, FiPhone, FiUser } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
@@ -74,6 +74,8 @@ export default function Signup() {
         return Object.keys(newErrors).length === 0;
     }
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -85,6 +87,10 @@ export default function Signup() {
             setLoading(true);
             const response = await api.post("/api/auth/signup", formData);
             showSuccess(response.data.message);
+            sessionStorage.setItem("email", formData.emailAddress);
+            navigate("/verify-otp");
+
+            console.log(sessionStorage.getItem("email"));
 
         }
         catch (error) {
