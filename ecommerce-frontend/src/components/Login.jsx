@@ -1,8 +1,66 @@
-export default function Login ()
-{
+import { FcGoogle } from 'react-icons/fc';
+import FreshGroceryStoreImage from '../assets/Fresh-Grocery-Image.png';
+import { FiLock, FiMail} from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+
+export default function Login() {
     return (
         <>
-            <h1>Login Page</h1>
+            <div className="login-page">
+                <div className="login-container">
+                    <div className="login-left-image">
+                        <img src={FreshGroceryStoreImage} alt="Left Image of Fresh Grocery Store" />
+                    </div>
+                    <div className="login-right-section">
+                        <form action="">
+                            <div className="password-icon">
+                                <FiLock className="lock-icon" />
+                            </div>
+                            <div className="login-content">
+                                <h3>Login</h3>
+                                <p>Login with your email and password</p>
+                            </div>
+                            <div className="email-password-container">
+                                <label htmlFor="email">Email</label>
+                                <FiUser className="input-icon" />
+                                <input type="text" placeholder='Enter your email or mobile number' />
+
+                                <label htmlFor="password">Password</label>
+                                <FiLock className='input-icon' />
+                                <input type="text" name="" id="" placeholder='Enter your password' />
+                            </div>
+
+                            <div className="remember-forgot-container">
+                                <input type="checkbox" />
+                                <p>Remeber me</p>
+                                <Link to="/">Forgot Password</Link>
+                            </div>
+
+                            <button>Login</button>
+
+                        </form>
+                        <div className="divider">OR</div>
+                        <div className="social-login">
+
+                            <button type="button" className="otp-login-btn">
+                                <FiMail className="otp-msg-icon" />
+                                <span>Continue with OTP</span>
+                            </button>
+
+                            <button type="button" className="login-btn">
+                                <FcGoogle className="login-google-icon" />
+                                <span>Continue with Google</span>
+                            </button>
+                        </div>
+
+                        <div className="dont-have-account">
+                            <p>Don't have account?</p>
+                            <Link to="/signup">Create Account</Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
