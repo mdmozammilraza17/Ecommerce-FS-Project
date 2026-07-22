@@ -1,0 +1,340 @@
+/* Login Page CSS */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    align-items: flex-start;
+    background: #f5f7f6;
+}
+
+/* Login Container CSS */
+.login-container {
+    width: 100%;
+    min-height: 700px;
+    max-width: 1000px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    display: flex;
+    padding: 30px;
+}
+
+.login-left-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: -8px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Login Right Section */
+.login-right-section {
+    height: 100%;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: none;
+    border-radius: 0;
+    background: transparent;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.12);
+    border-radius: 0 20px 20px 0;
+}
+
+/* Header icon and h3 and p content */
+.header-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.header-content h3 {
+    font-family: "Inter", sans-serif;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-weight: 750;
+}
+
+.header-content p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Password icon CSS */
+.password-icon {
+    font-size: 18px;
+    color: #fff;
+    background-color: #1b5e20;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Login Form CSS */
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    gap: 8px;
+}
+
+/* Form Group CSS */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 10px;
+}
+
+/* Input wrapper */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #6b7280;
+    pointer-events: none;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 40px;
+    padding: 0 16px 0 46px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+
+/* Placeholder */
+.input-wrapper input::placeholder {
+    color: #9ca3af;
+}
+
+/* Focus */
+.input-wrapper input:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+/* Focus hone par icon ka color bhi change ho */
+.input-wrapper:focus-within .input-icon {
+    color: #16a34a;
+}
+
+/* Remember forgot container CSS */
+/* Remember Me + Forgot Password */
+.remember-forgot-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0 24px;
+}
+
+/* Remember Me */
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #16a34a;
+}
+
+.remember-me label {
+    font-size: 14px;
+    color: #4b5563;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Forgot Password */
+.remember-forgot-container a {
+    font-size: 14px;
+    color: #16a34a;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.remember-forgot-container a:hover {
+    color: #15803d;
+    text-decoration: underline;
+}
+
+/* Login Button */
+.loginForm button {
+    width: 100%;
+    height: 40px;
+    background-color: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.loginForm button:hover {
+    background-color: #15803d;
+}
+
+/* Click */
+.loginForm button:active {
+    transform: scale(0.98);
+}
+
+/* Keyboard Focus */
+.loginForm button:focus-visible {
+    outline: 3px solid rgba(22, 163, 74, 0.25);
+    outline-offset: 2px;
+}
+
+/* Disabled */
+.loginForm button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Login Divider */
+.login-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 24px 0;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #d1d5db;
+}
+
+.login-divider::before {
+    margin-right: 12px;
+}
+
+.login-divider::after {
+    margin-left: 12px;
+}
+
+/* Social Login Container */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* Common Button Style */
+.social-login button {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.social-login button:hover {
+    background-color: #f9fafb;
+    border-color: #16a34a;
+}
+
+/* Active Effect */
+.social-login button:active {
+    transform: scale(0.98);
+}
+
+/* OTP Icon */
+.otp-msg-icon {
+    font-size: 18px;
+    color: #16a34a;
+}
+
+/* Google Icon */
+.login-google-icon {
+    font-size: 20px;
+}
+
+/* Button Text */
+.social-login button span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* Don't Have Account */
+.dont-have-account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.dont-have-account p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.dont-have-account a {
+    color: #16a34a;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.dont-have-account a:hover {
+    color: #15803d;
+    text-decoration: underline;
+}
