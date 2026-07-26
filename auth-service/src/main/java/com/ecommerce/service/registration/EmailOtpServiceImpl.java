@@ -1,12 +1,10 @@
-package com.ecommerce.service;
+package com.ecommerce.service.registration;
 
-import com.ecommerce.dto.VerifyOtpRequest;
-import com.ecommerce.dto.VerifyOtpResponse;
-import com.ecommerce.entity.EmailOtp;
-import com.ecommerce.entity.UserEntity;
-import com.ecommerce.exception.BadRequestException;
-import com.ecommerce.repository.EmailOtpRepository;
-import com.ecommerce.repository.UserRepository;
+import com.ecommerce.entity.registration.EmailOtp;
+import com.ecommerce.entity.registration.UserEntity;
+import com.ecommerce.exception.registration.BadRequestException;
+import com.ecommerce.repository.registration.EmailOtpRepository;
+import com.ecommerce.repository.registration.UserRepository;
 import com.ecommerce.util.OtpUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

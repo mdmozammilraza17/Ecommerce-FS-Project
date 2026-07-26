@@ -1,18 +1,17 @@
-package com.ecommerce.service;
+package com.ecommerce.service.registration;
 
-import com.ecommerce.dto.SignupRequest;
-import com.ecommerce.dto.SignupResponse;
-import com.ecommerce.dto.VerifyOtpRequest;
-import com.ecommerce.dto.VerifyOtpResponse;
-import com.ecommerce.entity.UserEntity;
+import com.ecommerce.dto.registration.SignupRequest;
+import com.ecommerce.dto.registration.SignupResponse;
+import com.ecommerce.dto.registration.VerifyOtpRequest;
+import com.ecommerce.dto.registration.VerifyOtpResponse;
+import com.ecommerce.entity.registration.UserEntity;
 import com.ecommerce.enums.Role;
 import com.ecommerce.enums.UserStatus;
-import com.ecommerce.exception.BadRequestException;
-import com.ecommerce.exception.ConflictException;
-import com.ecommerce.exception.InvalidCredentialsException;
-import com.ecommerce.exception.ResourceNotFoundException;
-import com.ecommerce.repository.EmailOtpRepository;
-import com.ecommerce.repository.UserRepository;
+import com.ecommerce.exception.registration.BadRequestException;
+import com.ecommerce.exception.registration.ConflictException;
+import com.ecommerce.exception.registration.ResourceNotFoundException;
+import com.ecommerce.repository.registration.EmailOtpRepository;
+import com.ecommerce.repository.registration.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class RegistrationServiceImpl implements RegistrationService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final EmailOtpService emailOtpService;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailOtpService emailOtpService, EmailOtpRepository emailOtpRepository) {
+    public RegistrationServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailOtpService emailOtpService, EmailOtpRepository emailOtpRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.emailOtpService = emailOtpService;

@@ -12,7 +12,7 @@ public class RouteValidator {
 
     private static final Set<String> OPEN_API_ENDPOINTS = Set.of(
             "/api/auth/signup",
-            "/api/auth/token"
+            "/api/auth/login"
     );
 
     public final Predicate<ServerHttpRequest> isSecured = request -> {

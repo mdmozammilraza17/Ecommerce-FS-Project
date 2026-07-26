@@ -1,7 +1,7 @@
-package com.ecommerce.repository;
+package com.ecommerce.repository.registration;
 
-import com.ecommerce.entity.EmailOtp;
-import com.ecommerce.entity.UserEntity;
+import com.ecommerce.entity.registration.EmailOtp;
+import com.ecommerce.entity.registration.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.ecommerce.exception;
+package com.ecommerce.exception.registration;
 
 public class ConflictException extends RuntimeException{
     public ConflictException (String message)

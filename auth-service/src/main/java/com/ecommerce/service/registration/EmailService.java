@@ -1,4 +1,4 @@
-package com.ecommerce.service;
+package com.ecommerce.service.registration;
 
 public interface EmailService {
 
