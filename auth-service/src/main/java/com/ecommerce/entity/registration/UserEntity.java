@@ -1,4 +1,4 @@
-package com.ecommerce.entity;
+package com.ecommerce.entity.registration;
 
 import com.ecommerce.enums.Role;
 import com.ecommerce.enums.UserStatus;

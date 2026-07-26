@@ -1,4 +1,4 @@
-package com.ecommerce.service;
+package com.ecommerce.service.registration;
 
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.core.io.ClassPathResource;

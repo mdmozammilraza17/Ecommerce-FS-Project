@@ -1,4 +1,4 @@
-package com.ecommerce.exception;
+package com.ecommerce.exception.registration;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
