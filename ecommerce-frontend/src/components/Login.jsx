@@ -2,10 +2,52 @@ import { FcGoogle } from 'react-icons/fc';
 import FreshGroceryStoreImage from '../assets/Fresh-Grocery-Image.png';
 import { FiLock, FiMail } from 'react-icons/fi';
 import { FiUser } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import '../components/Login.css';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../features/auth/authSlice';
+import { showError } from '../utils/toastUtil';
 
 export default function Login() {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
+
+    const [formData, setFormData] = useState(
+        {
+            username: "",
+            password: ""
+        }
+    );
+
+    console.log("Redux State:", {
+        isAuthenticated,
+        loading,
+        error,
+    });
+
+    console.log("Access Token:", localStorage.getItem("accessToken"));
+
+console.log(localStorage.getItem("accessToken"));
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/home", { replace: true });
+        }
+    }, [isAuthenticated, navigate])
+
+    useEffect(() => {
+        if (error) {
+            showError(error);
+        }
+    }, [error]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        dispatch(loginUser(formData));
+    }
+
     return (
         <>
             <div className="login-page">
@@ -14,7 +56,7 @@ export default function Login() {
                         <img src={FreshGroceryStoreImage} alt="Left Image of Fresh Grocery Store" />
                     </div>
                     <div className="login-right-section">
-                        <form className='loginForm'>
+                        <form onSubmit={handleSubmit} className='loginForm'>
                             <div className="header-content">
                                 <div className="password-icon">
                                     <FiLock className="lock-icon" />
@@ -33,6 +75,17 @@ export default function Login() {
                                         <input
                                             type="email"
                                             id="email"
+                                            name="username"
+                                            value={formData.username}
+                                            onChange={(e) => {
+                                                setFormData(
+                                                    {
+                                                        ...formData,
+                                                        [e.target.name]: e.target.value
+                                                    }
+                                                );
+                                            }
+                                            }
                                             placeholder="Enter your email or mobile number"
                                         />
                                     </div>
@@ -45,6 +98,17 @@ export default function Login() {
                                         <input
                                             type="password"
                                             id="password"
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={(e) => {
+                                                setFormData(
+                                                    {
+                                                        ...formData,
+                                                        [e.target.name]: e.target.value
+                                                    }
+                                                )
+                                            }
+                                            }
                                             placeholder="Enter your password"
                                         />
                                     </div>
@@ -60,7 +124,7 @@ export default function Login() {
                                 <Link to="/forgot-password">Forgot Password?</Link>
                             </div>
 
-                            <button>Login</button>
+                            <button type='submit' disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
 
                         </form>
                         <div className="login-divider">OR</div>
