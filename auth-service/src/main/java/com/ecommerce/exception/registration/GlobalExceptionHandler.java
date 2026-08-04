@@ -25,7 +25,9 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(errorResponse);
     }
 
     // Bad Request
@@ -98,6 +100,8 @@ public class GlobalExceptionHandler {
     // Any Other Exception
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
+
+        ex.printStackTrace();
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())

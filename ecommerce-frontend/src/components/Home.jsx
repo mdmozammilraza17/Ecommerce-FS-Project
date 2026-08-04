@@ -45,9 +45,7 @@ export default function Home() {
     };
   }, [])
 
-  const { isLoggedIn } = useSelector(
-    (state) => state.auth
-  );
+  const {isAuthenticated, loading, error} = useSelector((state) => state.auth);
 
   return (
     <>
@@ -86,7 +84,7 @@ export default function Home() {
         </div>
 
         {
-          !isLoggedIn ? (
+          !isAuthenticated ? (
             <div className="home-login-signup">
 
 
