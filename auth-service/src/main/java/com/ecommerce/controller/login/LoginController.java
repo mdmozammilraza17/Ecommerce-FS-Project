@@ -2,14 +2,14 @@ package com.ecommerce.controller.login;
 
 import com.ecommerce.dto.login.LoginRequestDTO;
 import com.ecommerce.dto.login.LoginResponseDTO;
+import com.ecommerce.dto.login.UserProfileResponseDTO;
+import com.ecommerce.security.CustomUserDetails;
 import com.ecommerce.service.login.LoginService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping ("/api/auth")
@@ -28,5 +28,15 @@ public class LoginController {
     {
         LoginResponseDTO login = loginService.login(loginRequestDTO);
         return ResponseEntity.ok(login);
+    }
+
+    @GetMapping ("/me")
+    public ResponseEntity<UserProfileResponseDTO> getCurrentUser (
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+            )
+    {
+        return ResponseEntity.ok(
+                loginService.getCurrentUser(customUserDetails)
+        );
     }
 }

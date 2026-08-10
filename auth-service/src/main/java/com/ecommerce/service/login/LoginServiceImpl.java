@@ -2,6 +2,7 @@ package com.ecommerce.service.login;
 
 import com.ecommerce.dto.login.LoginRequestDTO;
 import com.ecommerce.dto.login.LoginResponseDTO;
+import com.ecommerce.dto.login.UserProfileResponseDTO;
 import com.ecommerce.entity.registration.UserEntity;
 import com.ecommerce.exception.registration.InvalidCredentialsException;
 import com.ecommerce.security.CustomUserDetails;
@@ -36,7 +37,7 @@ public class LoginServiceImpl implements LoginService{
                CustomUserDetails principal =
                        (CustomUserDetails) authenticate.getPrincipal();
 
-               String token = jwtService.generateToken(principal, loginRequestDTO.getUsername());
+               String token = jwtService.generateToken(principal);
 
                UserEntity user = principal.getUserEntity();
 
@@ -60,5 +61,19 @@ public class LoginServiceImpl implements LoginService{
                        "Invalid username or password"
                );
            }
+    }
+
+    @Override
+    public UserProfileResponseDTO getCurrentUser(CustomUserDetails customUserDetails) {
+
+        UserEntity user = customUserDetails.getUserEntity();
+
+        return UserProfileResponseDTO.builder()
+                .userId(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .emailAddress(user.getEmailAddress())
+                .role(user.getRole())
+                .build();
     }
 }

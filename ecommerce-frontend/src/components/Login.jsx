@@ -1,11 +1,10 @@
-import { FcGoogle } from 'react-icons/fc';
-import FreshGroceryStoreImage from '../assets/Fresh-Grocery-Image.png';
-import { FiLock, FiMail } from 'react-icons/fi';
-import { FiUser } from 'react-icons/fi';
-import { Link, useNavigate } from "react-router-dom";
-import '../components/Login.css';
 import { useEffect, useState } from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { FiLock, FiMail, FiUser } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import FreshGroceryStoreImage from '../assets/Fresh-Grocery-Image.png';
+import '../components/Login.css';
 import { loginUser } from '../features/auth/authSlice';
 import { showError } from '../utils/toastUtil';
 
@@ -13,7 +12,7 @@ export default function Login() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
+    const { isAuthenticated, loginLoading, error } = useSelector((state) => state.auth);
 
     const [formData, setFormData] = useState(
         {
@@ -22,30 +21,19 @@ export default function Login() {
         }
     );
 
-    console.log("Redux State:", {
-        isAuthenticated,
-        loading,
-        error,
-    });
-
-    console.log("Access Token:", localStorage.getItem("accessToken"));
-
-console.log(localStorage.getItem("accessToken"));
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate("/home", { replace: true });
-        }
-    }, [isAuthenticated, navigate])
-
     useEffect(() => {
         if (error) {
             showError(error);
         }
     }, [error]);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        dispatch(loginUser(formData));
+        const result = await dispatch(loginUser(formData));
+
+        if (loginUser.fulfilled.match(result)) {
+            navigate("/home", { replace: true });
+        }
     }
 
     return (
@@ -124,7 +112,7 @@ console.log(localStorage.getItem("accessToken"));
                                 <Link to="/forgot-password">Forgot Password?</Link>
                             </div>
 
-                            <button type='submit' disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+                            <button type='submit' disabled={loginLoading}>{loginLoading ? "Logging in..." : "Login"}</button>
 
                         </form>
                         <div className="login-divider">OR</div>
