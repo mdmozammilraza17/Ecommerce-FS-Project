@@ -1,6 +1,5 @@
 package com.ecommerce.security;
 
-import com.ecommerce.dto.login.LoginRequestDTO;
 import com.ecommerce.security.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,17 +17,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.customUserDetailsService = customUserDetailsService;
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http)
-    {
+    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -53,11 +49,13 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider (
+            CustomUserDetailsService customUserDetailsService,
             PasswordEncoder passwordEncoder)
     {
         DaoAuthenticationProvider daoAuthenticationProvider =
-                new DaoAuthenticationProvider(customUserDetailsService);
+                new DaoAuthenticationProvider();
 
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 
         return daoAuthenticationProvider;
@@ -65,8 +63,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager (
-            AuthenticationConfiguration authenticationConfiguration)
-    {
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
