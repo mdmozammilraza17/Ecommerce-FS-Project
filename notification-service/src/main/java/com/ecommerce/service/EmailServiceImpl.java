@@ -1,4 +1,4 @@
-package com.ecommerce.service.registration;
+package com.ecommerce.service;
 
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.core.io.ClassPathResource;
@@ -159,8 +159,6 @@ public class EmailServiceImpl implements EmailService {
             );
 
             javaMailSender.send(mimeMessage);
-
-            System.out.println("Email sent successfully.");
 
         } catch (Exception e) {
             e.printStackTrace();

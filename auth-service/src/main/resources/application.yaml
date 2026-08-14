@@ -14,18 +14,15 @@ spring:
       hibernate:
         format_sql: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+
     properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      schema.registry.url: http://localhost:9081
 
 server:
   port: 8086

@@ -10,7 +10,6 @@ import com.ecommerce.enums.UserStatus;
 import com.ecommerce.exception.registration.BadRequestException;
 import com.ecommerce.exception.registration.ConflictException;
 import com.ecommerce.exception.registration.ResourceNotFoundException;
-import com.ecommerce.repository.registration.EmailOtpRepository;
 import com.ecommerce.repository.registration.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final UserRepository userRepository;
     private final EmailOtpService emailOtpService;
 
-    public RegistrationServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailOtpService emailOtpService, EmailOtpRepository emailOtpRepository) {
+    public RegistrationServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailOtpService emailOtpService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.emailOtpService = emailOtpService;

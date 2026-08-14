@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/common-event/pom.xml" />
         <option value="$PROJECT_DIR$/categories-service/pom.xml" />
         <option value="$PROJECT_DIR$/banner-service/pom.xml" />
+        <option value="$PROJECT_DIR$/event-contract/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

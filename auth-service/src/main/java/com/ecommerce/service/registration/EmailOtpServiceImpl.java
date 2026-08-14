@@ -4,8 +4,8 @@ import com.ecommerce.entity.registration.EmailOtp;
 import com.ecommerce.entity.registration.UserEntity;
 import com.ecommerce.exception.registration.BadRequestException;
 import com.ecommerce.repository.registration.EmailOtpRepository;
-import com.ecommerce.repository.registration.UserRepository;
 import com.ecommerce.util.OtpUtil;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +16,11 @@ public class EmailOtpServiceImpl implements EmailOtpService {
 
     private final EmailOtpRepository emailOtpRepository;
 
-    private final EmailService emailService;
+    private final KafkaTemplate<String, com.ecommerce.event.OtpEmailEvent> kafkaTemplate;
 
-    private final UserRepository userRepository;
-
-
-    public EmailOtpServiceImpl(EmailOtpRepository emailOtpRepository, EmailService emailService,
-                               UserRepository userRepository) {
+    public EmailOtpServiceImpl(EmailOtpRepository emailOtpRepository, KafkaTemplate<String, com.ecommerce.event.OtpEmailEvent> kafkaTemplate) {
         this.emailOtpRepository = emailOtpRepository;
-        this.emailService = emailService;
-        this.userRepository = userRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -41,7 +36,18 @@ public class EmailOtpServiceImpl implements EmailOtpService {
         emailOtp.setExpiryTime(LocalDateTime.now().plusMinutes(5));
 
         emailOtpRepository.save(emailOtp);
-        emailService.sendOtpEmail(user.getEmailAddress(), emailOtp.getOtp());
+
+        // Create Avro event
+        com.ecommerce.event.OtpEmailEvent otpEmailEvent = com.ecommerce.event.OtpEmailEvent.newBuilder()
+                .setEmail(user.getEmailAddress())
+                .setOtp(emailOtp.getOtp())
+                .build();
+
+        // Publish event
+        kafkaTemplate.send(
+                "otp-email-topic",
+                otpEmailEvent
+        );
     }
 
     @Override

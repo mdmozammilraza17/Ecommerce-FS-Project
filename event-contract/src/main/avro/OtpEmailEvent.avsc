@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "OtpEmailEvent",
+  "namespace": "com.ecommerce.event",
+  "fields": [
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "otp",
+      "type": "string"
+    }
+  ]
+}
