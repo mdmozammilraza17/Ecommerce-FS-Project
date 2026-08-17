@@ -20,6 +20,7 @@ public class OtpEmailConsumer {
     public void consumeOtpEmailEvent(com.ecommerce.event.OtpEmailEvent event) {
 
         emailService.sendOtpEmail(
+                event.getFirstName().toString(),
                 event.getEmail().toString(),
                 event.getOtp().toString()
         );

@@ -2,8 +2,10 @@ package com.ecommerce.service.registration;
 
 import com.ecommerce.entity.registration.EmailOtp;
 import com.ecommerce.entity.registration.UserEntity;
+import com.ecommerce.event.OtpEmailEvent;
 import com.ecommerce.exception.registration.BadRequestException;
 import com.ecommerce.repository.registration.EmailOtpRepository;
+import com.ecommerce.repository.registration.UserRepository;
 import com.ecommerce.util.OtpUtil;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,13 @@ import java.time.LocalDateTime;
 public class EmailOtpServiceImpl implements EmailOtpService {
 
     private final EmailOtpRepository emailOtpRepository;
+    private final UserRepository userRepository;
 
-    private final KafkaTemplate<String, com.ecommerce.event.OtpEmailEvent> kafkaTemplate;
+    private final KafkaTemplate<String, OtpEmailEvent> kafkaTemplate;
 
-    public EmailOtpServiceImpl(EmailOtpRepository emailOtpRepository, KafkaTemplate<String, com.ecommerce.event.OtpEmailEvent> kafkaTemplate) {
+    public EmailOtpServiceImpl(EmailOtpRepository emailOtpRepository, UserRepository userRepository, KafkaTemplate<String, OtpEmailEvent> kafkaTemplate) {
         this.emailOtpRepository = emailOtpRepository;
+        this.userRepository = userRepository;
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -37,8 +41,9 @@ public class EmailOtpServiceImpl implements EmailOtpService {
 
         emailOtpRepository.save(emailOtp);
 
-        // Create Avro event
-        com.ecommerce.event.OtpEmailEvent otpEmailEvent = com.ecommerce.event.OtpEmailEvent.newBuilder()
+        // Create Avro event object and set value
+        OtpEmailEvent otpEmailEvent = OtpEmailEvent.newBuilder()
+                .setFirstName(user.getFirstName())
                 .setEmail(user.getEmailAddress())
                 .setOtp(emailOtp.getOtp())
                 .build();

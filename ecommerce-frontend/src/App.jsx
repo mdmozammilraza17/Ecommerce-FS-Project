@@ -9,7 +9,6 @@ import VerifyOtp from "./components/VerifyOtp";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { initializeAuth } from "./features/auth/authSlice";
-
 export default function App() {
 
   const dispatch = useDispatch();
