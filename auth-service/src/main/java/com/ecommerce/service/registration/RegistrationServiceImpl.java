@@ -54,6 +54,18 @@ public class RegistrationServiceImpl implements RegistrationService {
                 throw new ConflictException("User already registered, pls log in");
             }
 
+            user.setFirstName(signupRequest.getFirstName());
+            user.setLastName(signupRequest.getLastName());
+            user.setPhoneNumber(signupRequest.getPhoneNumber());
+
+            user.setPassword(
+                    passwordEncoder.encode(
+                            signupRequest.getPassword()
+                    )
+            );
+
+            userRepository.save(user);
+
             // If status as PENDING then generate and send new OTP
             emailOtpService.generateAndSaveOtp(user);
 

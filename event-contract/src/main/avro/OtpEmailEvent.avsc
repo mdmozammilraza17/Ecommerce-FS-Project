@@ -8,6 +8,11 @@
       "type": "string"
     },
     {
+      "name": "firstName",
+      "type": "string",
+      "default": ""
+    },
+    {
       "name": "otp",
       "type": "string"
     }
