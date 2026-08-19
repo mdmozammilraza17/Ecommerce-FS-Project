@@ -17,13 +17,20 @@ public class RouteValidator {
 
     public final Predicate<ServerHttpRequest> isSecured = request -> {
 
-        // Allow CORS preflight requests
+        // CORS preflight
         if (HttpMethod.OPTIONS.equals(request.getMethod())) {
             return false;
         }
 
         String path = request.getURI().getPath();
 
+        // GET banner APIs are public
+        if (HttpMethod.GET.equals(request.getMethod())
+                && path.startsWith("/api/banner")) {
+            return false;
+        }
+
+        // Public exact endpoints
         return !OPEN_API_ENDPOINTS.contains(path);
     };
 }

@@ -31,3 +31,6 @@ eureka:
 
 server:
   port: 9093
+
+jwt:
+  secret: ${JWT_SECRET}

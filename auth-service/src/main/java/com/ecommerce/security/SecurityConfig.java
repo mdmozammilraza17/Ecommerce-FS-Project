@@ -35,6 +35,7 @@ public class SecurityConfig {
                                         "/api/auth/signup",
                                         "/api/auth/verify-otp").permitAll()
                                 .requestMatchers("/api/auth/me").hasRole("CUSTOMER")
+                                .requestMatchers("/api/banner/create").hasRole("ADMIN")
                                 .anyRequest().authenticated()))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

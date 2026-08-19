@@ -38,6 +38,7 @@ public class GatewayConfig {
                                 .uri("lb://CATEGORIES-SERVICE"))
                 .route("BANNER-SERVICE", r->
                         r.path("/api/banner/**")
+                                .filters(f -> f.filters(authenticationFilter.apply(new AuthenticationFilter.Config())))
                                 .uri("lb://BANNER-SERVICE"))
                 .build();
     }
