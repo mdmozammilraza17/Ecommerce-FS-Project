@@ -1,0 +1,170 @@
+.header-container {
+    padding: 12px 24px;
+}
+
+.main-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.header-logo-img img {
+    width: 110px;
+    height: auto;
+}
+
+.categories-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(8, 137, 31);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    outline: none;
+}
+
+.search-button {
+    padding: 10px;
+    width: 40px;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    background-color: rgba(8, 137, 31);
+    color: white;
+    cursor: pointer;
+}
+
+.offer-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.percentage-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #333;
+    border-radius: 50%;
+    color: rgba(8, 137, 31);
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.offer-bar h3 {
+    margin: 0;
+    font-weight: 100;
+    font-size: 18px;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    border-radius: 50%;
+    background-color: #333;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.name h4,
+.name p {
+    margin: 0;
+}
+
+.name p{
+    color: #7e817c;
+    font-size: 15px;
+}
+
+.profile-container svg {
+    margin-left: 5px;
+}
+
+.login-register {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.login-register h4 {
+    margin: 0;
+    font-weight: 550;
+}
+
+.login-register h4 a {
+    text-decoration: none;
+    color: inherit;
+}
+.cart-icon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.cart-symbol {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon > span {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+
+    width: 16px;
+    height: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgb(8, 137, 31);
+    color: white;
+    font-size: 11px;
+    border-radius: 50%;
+}

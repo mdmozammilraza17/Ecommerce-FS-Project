@@ -1,5 +1,4 @@
 import Footer from "./Footer";
-import "./Home.css";
 import "./Footer.css";
 import BannerSlider from "./BannerSlider";
 import TopInfoBar from "./TopInfoBar";
