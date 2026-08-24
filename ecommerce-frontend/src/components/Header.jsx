@@ -1,101 +1,91 @@
-import { useEffect, useRef, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import StdImage from "../assets/grocery-store.png";
-import ProfilePic1 from "../assets/profile-pic-1.jpg";
-import CartButton from "./CartButton";
-import LoginSignupButton from "./LoginSignupButton";
-import ProfileDropdown from "./ProfileDropdown";
-import SearchBar from "./SearchBar";
+import './Header.css';
+import HeaderLogo from '../assets/STD-Grocery-Store.png';
+import { FiMenu, FiChevronDown, FiSearch, FiUser, FiShoppingCart } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 export default function Header() {
 
-    const dropdownRef = useRef(null);
-
-    const [showDropdown, setDropdown] = useState(false);
-
-    const handleDropdown = () => {
-        setDropdown(prev => !prev);
-    };
 
     const {
-        isAuthenticated, authLoading
+        isAuthenticated, user, authLoading
     } = useSelector((state) => state.auth);
 
+    const getGreeting = () => {
+        const hour = new Date().getHours();
 
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (dropdownRef.current &&
-                !dropdownRef.current.contains(event.target)) {
-                setDropdown(false);
-            }
+        if (hour >= 5 && hour < 12) {
+            return "Good Morning!";
+        } else if (hour >= 12 && hour < 17) {
+            return "Good Afternoon!";
+        } else if (hour >= 17 && hour < 21) {
+            return "Good Evening!";
+        } else {
+            return "Good Night!";
         }
-        document.addEventListener(
-            "mousedown",
-            handleClickOutside
-        );
+    };
 
-        return () => {
-            document.removeEventListener(
-                "mousedown",
-                handleClickOutside
-            );
-        };
-    }, [])
 
     return (
         <>
-            <header className="home-container">
+            <header className="header-container">
+
+                <div className="main-container">
+
+                    <div className="header-logo-img">
+                        <img src={HeaderLogo} alt="Header Logo" />
+                    </div>
 
 
-                <div className="std-log-img">
-                    <img
-                        src={StdImage}
-                        alt="Std General Store Image Logo"
-                    />
-                </div>
+                    <div className="categories-menu">
+                        <FiMenu />
+                        <span>All Categories</span>
+                        <FiChevronDown />
+                    </div>
 
-                <div className="home-actions">
-                    <nav>
-                        <ul>
-                            <li>Home</li>
-                            <li>Products</li>
-                            <li>Categories</li>
-                        </ul>
-                    </nav>
-                </div>
+                    <div className="search-bar">
+                        <input type="text" placeholder="Search for milk, apple, rice" />
+                        <button className="search-button">
+                            <FiSearch />
+                        </button>
+                    </div>
 
-                <SearchBar />
+                    <div className="offer-bar">
+                        <span className="percentage-icon">%</span>
+                        <h3>Offers</h3>
+                    </div>
 
-                <CartButton />
-
-                {
-                    authLoading ? (
-                        <div className="home-auth-loading">
-                            <ClipLoader
-                                size={20}
-                                speedMultiplier={1}
-                            />
+                    {authLoading ? (
+                        <ClipLoader size={25} />
+                    ) : isAuthenticated ? (<div className="profile-container">
+                        <div className="profile-pic">
+                            👤
                         </div>
-                    ) : isAuthenticated ?
-                        (
-                            <div className="home-profile"
-                                ref={dropdownRef}>
+                        <div className="name">
+                            <h4>Hi, {user?.firstName}</h4>
+                            <p>{getGreeting()}</p>
 
+                        </div>
+                        <FiChevronDown />
 
-                                <button onClick={handleDropdown}>
-                                    <FaUserCircle style={{ marginRight: "6px" }} />
+                    </div>) : (<div className="login-register">
+                        <FiUser />
+                        <h4>
+                            <Link to="/login">Login / Register </Link>
+                        </h4>
+                    </div>)}
 
-                                    <img
-                                        src={ProfilePic1}
-                                        alt="Profile image"
-                                    />
-                                </button>
-                                {showDropdown && <ProfileDropdown />}
-                            </div>
-                        ) : (<LoginSignupButton />)
-                }
+                    <div className="cart-icon">
+                        <div className="cart-symbol">
+                            <FiShoppingCart />
+                            <span className="cart-count">0</span>
+                        </div>
+                        <span>Cart</span>
+                    </div>
+
+                </div>
+
             </header>
         </>
     )
