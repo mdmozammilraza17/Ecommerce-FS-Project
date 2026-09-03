@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "OtpEmailEvent",
+  "name": "ResendOtpEvent",
   "namespace": "com.ecommerce.event",
   "fields": [
     {

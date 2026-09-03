@@ -1,9 +1,7 @@
 package com.ecommerce.service.registration;
 
-import com.ecommerce.dto.registration.SignupRequest;
-import com.ecommerce.dto.registration.SignupResponse;
-import com.ecommerce.dto.registration.VerifyOtpRequest;
-import com.ecommerce.dto.registration.VerifyOtpResponse;
+import com.ecommerce.dto.registration.*;
+import com.ecommerce.dto.registration.resendotp.ResendOtpRequest;
 
 public interface RegistrationService {
 
@@ -12,5 +10,8 @@ public interface RegistrationService {
 
     // Verify OTP
     VerifyOtpResponse verifyOtp (VerifyOtpRequest request);
+
+    // Resend OTP
+    void resendOtp (ResendOtpRequest resendOtpRequest);
 
 }
