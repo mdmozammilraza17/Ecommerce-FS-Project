@@ -8,7 +8,6 @@ import api from "../api/api";
 import AlmostThereImage from '../assets/Almost-There-Image.png';
 import { showError, showSuccess } from '../utils/toastUtil';
 import './VerifyOtp.css';
-import axios from 'axios';
 
 export default function VerifyOtp() {
     const inputArr = [0, 1, 2, 3, 4, 5];
@@ -52,11 +51,14 @@ export default function VerifyOtp() {
                     emailAddress: email
                 }
             );
+            showSuccess(response.data.message);
             setResendTimer(response.data.resendAvailableIn);
+            setOtp (["", "", "", "", "", ""]);
+            inputRefs.current?.[0].focus();
         }
         catch (error) {
             showError(
-                error.response.message || "Failed to resend OTP"
+                error.response?.data?.message || "Failed to resend OTP"
             );
         }
         finally {
@@ -121,7 +123,7 @@ export default function VerifyOtp() {
                 email: email,
                 otp: otpValue
             });
-
+            
             showSuccess(response.data.message);
 
             setTimeout(() => {
