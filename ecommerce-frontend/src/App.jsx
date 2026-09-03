@@ -28,7 +28,7 @@ export default function App() {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/login" element={<Login />} />
 
-      </Routes>
+      </Routes>-
 
       <ToastContainer
         position="top-right"

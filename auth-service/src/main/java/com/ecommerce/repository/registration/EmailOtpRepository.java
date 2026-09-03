@@ -13,4 +13,8 @@ public interface EmailOtpRepository extends JpaRepository<EmailOtp, Long> {
     Optional<EmailOtp> findByUserEntityAndConsumedFalse(UserEntity userEntity);
 
     void deleteByUserEntityAndConsumedFalse(UserEntity user);
+
+    Optional<EmailOtp> findFirstByUserEntityAndConsumedFalseOrderByCreatedAtDesc(
+            UserEntity user
+    );
 }

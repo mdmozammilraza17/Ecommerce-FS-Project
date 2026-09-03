@@ -1,9 +1,8 @@
 package com.ecommerce.controller.registration;
 
-import com.ecommerce.dto.registration.SignupRequest;
-import com.ecommerce.dto.registration.SignupResponse;
-import com.ecommerce.dto.registration.VerifyOtpRequest;
-import com.ecommerce.dto.registration.VerifyOtpResponse;
+import com.ecommerce.dto.registration.*;
+import com.ecommerce.dto.registration.resendotp.ResendOtpRequest;
+import com.ecommerce.dto.registration.resendotp.ResendOtpResponse;
 import com.ecommerce.service.registration.RegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -38,6 +37,20 @@ public class RegistrationController {
     {
         VerifyOtpResponse verifyOtpResponse = userService.verifyOtp(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(verifyOtpResponse);
+    }
+
+    // Resend OTP
+    @PostMapping ("/resend-otp")
+    public ResponseEntity<ResendOtpResponse> resendOtpRequest (
+            @RequestBody ResendOtpRequest resendOtpRequest)
+    {
+        userService.resendOtp(resendOtpRequest);
+        ResendOtpResponse resendOtpResponse = new ResendOtpResponse(
+                "OTP sent successfully",
+                300,
+                60
+        );
+        return ResponseEntity.ok(resendOtpResponse);
     }
 }
 

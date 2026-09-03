@@ -1,12 +1,14 @@
-import './VerifyOtp.css';
-import AlmostThereImage from '../assets/Almost-There-Image.png';
-import { FiMail } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
-import { RiShieldCheckFill } from "react-icons/ri";
 import { useEffect, useRef, useState } from 'react';
-import api from "../api/api";
-import { showError, showSuccess } from '../utils/toastUtil';
+import { FaCheck, FaClock } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { FiMail } from "react-icons/fi";
+import { RiShieldCheckFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
+import api from "../api/api";
+import AlmostThereImage from '../assets/Almost-There-Image.png';
+import { showError, showSuccess } from '../utils/toastUtil';
+import './VerifyOtp.css';
+import axios from 'axios';
 
 export default function VerifyOtp() {
     const inputArr = [0, 1, 2, 3, 4, 5];
@@ -16,6 +18,51 @@ export default function VerifyOtp() {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
     const [loading, setLoading] = useState(false);
+
+    const [resendTimer, setResendTimer] = useState(60);
+
+    const [resending, setResending] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setResendTimer((prev) => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [resendTimer])
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+
+        return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+
+    }
+
+    const handleResendOtp = async () => {
+        try {
+            setResending(true);
+            const response = await api.post("/api/auth/resend-otp",
+                {
+                    emailAddress: email
+                }
+            );
+            setResendTimer(response.data.resendAvailableIn);
+        }
+        catch (error) {
+            showError(
+                error.response.message || "Failed to resend OTP"
+            );
+        }
+        finally {
+            setResending(false);
+        }
+    }
 
     useEffect(() => {
         inputRefs.current[0]?.focus();
@@ -37,7 +84,7 @@ export default function VerifyOtp() {
 
     const handleKeyDown = (e, index) => {
         if (e.key === "Backspace") {
-            if (otp[index] != "") {
+            if (otp[index] !== "") {
                 const updatedOtp = [...otp];
                 updatedOtp[index] = "";
                 setOtp(updatedOtp);
@@ -64,7 +111,7 @@ export default function VerifyOtp() {
         e.preventDefault();
         const otpValue = otp.join("");
 
-        if (otpValue.length != 6) {
+        if (otpValue.length !== 6) {
             showError("Please enter a valid 6 digit OTP.")
             return;
         }
@@ -146,8 +193,25 @@ export default function VerifyOtp() {
                             </div>
                             <div className="resend-otp">
                                 <span>Didn't receive the code?</span>
-                                <span className="resend-link">Resend OTP</span>in
-                                <span className='time-sec'>00:48</span>
+
+                                {resendTimer > 0 ? (
+                                    <>
+                                        <span className="resend-link-disable">
+                                            Resend OTP in
+                                        </span>
+
+                                        <span className="time-sec">
+                                            {formatTime(resendTimer)}
+                                        </span>
+                                    </>
+                                ) : (
+                                    <span
+                                        className="resend-link"
+                                        onClick={!resending ? handleResendOtp : undefined}
+                                    >
+                                        {resending ? 'Sending...' : "Resend OTP"}
+                                    </span>
+                                )}
                             </div>
                             <div className="secure-verification">
 
@@ -185,6 +249,27 @@ export default function VerifyOtp() {
                                 <span>Continue with Google</span>
                             </button>
                         </div>
+
+                        {resendTimer > 0 ? <div className="disable-state">
+                            <div className="watch">
+                                <FaClock />
+                            </div>
+                            <div className="disable-state-container">
+                                <h4>Please wait</h4>
+                                <p>You can resend OTP after {formatTime(resendTimer)} seconds</p>
+                            </div>
+                        </div> : <div className="enable-state">
+                            <div className="success-icon">
+                                <FaCheck />
+                            </div>
+                            <div className="enable-state-container">
+                                <h4>You can resend now</h4>
+                                <p>Click on 'Resend OTP' to receive a new code</p>
+                            </div>
+                        </div>}
+
+
+
                     </div>
                 </div>
             </div>

@@ -1,14 +1,12 @@
-import './Signup.css';
-import { Link, useNavigate } from "react-router-dom";
-import FreshGroceryImg from '../assets/Fresh-Grocery-Image.png';
-import { FiCircle, FiPhone, FiUser } from "react-icons/fi";
-import { FiMail } from "react-icons/fi";
-import { FiLock } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
 import { useState } from 'react';
-import api from "../api/api";
-import { showSuccess, showError } from "../utils/toastUtil";
+import { FcGoogle } from "react-icons/fc";
+import { FiLock, FiMail, FiPhone, FiUser } from "react-icons/fi";
 import { IoCloseCircle } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api/api";
+import FreshGroceryImg from '../assets/Fresh-Grocery-Image.png';
+import { showError, showSuccess } from "../utils/toastUtil";
+import './Signup.css';
 export default function Signup() {
 
     const [formData, setFormData] = useState({

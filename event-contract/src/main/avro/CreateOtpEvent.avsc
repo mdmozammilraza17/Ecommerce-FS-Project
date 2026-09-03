@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "CreateOtpEvent",
+  "namespace": "com.ecommerce.event",
+  "fields": [
+    {
+      "name": "email",
+      "type": "string"
+    },
+    {
+      "name": "firstName",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "otp",
+      "type": "string"
+    }
+  ]
+}

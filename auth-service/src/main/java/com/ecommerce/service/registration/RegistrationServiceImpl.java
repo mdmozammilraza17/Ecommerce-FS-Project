@@ -1,20 +1,25 @@
 package com.ecommerce.service.registration;
 
-import com.ecommerce.dto.registration.SignupRequest;
-import com.ecommerce.dto.registration.SignupResponse;
-import com.ecommerce.dto.registration.VerifyOtpRequest;
-import com.ecommerce.dto.registration.VerifyOtpResponse;
+import com.ecommerce.dto.registration.*;
+import com.ecommerce.dto.registration.resendotp.ResendOtpRequest;
+import com.ecommerce.entity.registration.EmailOtp;
 import com.ecommerce.entity.registration.UserEntity;
 import com.ecommerce.enums.Role;
 import com.ecommerce.enums.UserStatus;
+import com.ecommerce.event.ResendOtpEvent;
 import com.ecommerce.exception.registration.BadRequestException;
 import com.ecommerce.exception.registration.ConflictException;
 import com.ecommerce.exception.registration.ResourceNotFoundException;
+import com.ecommerce.repository.registration.EmailOtpRepository;
 import com.ecommerce.repository.registration.UserRepository;
+import com.ecommerce.util.OtpUtil;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -23,11 +28,15 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final EmailOtpService emailOtpService;
+    private final EmailOtpRepository emailOtpRepository;
+    private final KafkaTemplate<String, ResendOtpEvent> kafkaTemplate;
 
-    public RegistrationServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailOtpService emailOtpService) {
+    public RegistrationServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailOtpService emailOtpService, EmailOtpRepository emailOtpRepository, KafkaTemplate<String, ResendOtpEvent> kafkaTemplate) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.emailOtpService = emailOtpService;
+        this.emailOtpRepository = emailOtpRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     // Create User or User Registration
@@ -44,13 +53,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         Optional<UserEntity> byEmailAddress = userRepository.
                 findByEmailAddress(signupRequest.getEmailAddress());
 
-        if (byEmailAddress.isPresent())
-        {
+        if (byEmailAddress.isPresent()) {
             UserEntity user = byEmailAddress.get();
 
             // If status as ACTIVE send a mesage in response
-            if (user.getStatus() == UserStatus.ACTIVE)
-            {
+            if (user.getStatus() == UserStatus.ACTIVE) {
                 throw new ConflictException("User already registered, pls log in");
             }
 
@@ -104,7 +111,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         // Get user
         UserEntity user = userRepository.findByEmailAddress(request.getEmail()).orElseThrow(() -> new
-                ResourceNotFoundException("User not found!!"));
+                UsernameNotFoundException("User not found!!"));
 
         // Call email OTP and check
         emailOtpService.verifyOtp(user, request.getOtp());
@@ -121,5 +128,44 @@ public class RegistrationServiceImpl implements RegistrationService {
         return verifyOtpResponse;
     }
 
+    @Transactional
+    @Override
+    public void resendOtp(ResendOtpRequest resendOtpRequest) {
+        UserEntity user = userRepository.findByEmailAddress(resendOtpRequest.getEmailAddress()).orElseThrow();
 
+        if (!user.getStatus().equals(UserStatus.PENDING)) {
+            throw new RuntimeException("User is already verified!");
+        }
+
+        // Old active OTP invalidate
+        emailOtpRepository
+                .findFirstByUserEntityAndConsumedFalseOrderByCreatedAtDesc(user)
+                .ifPresent(oldOtp -> {
+                    oldOtp.setConsumed(true);
+                    emailOtpRepository.save(oldOtp);
+                });
+
+        // Generate new OTP
+        String otp = OtpUtil.generateOtp();
+
+        EmailOtp emailOtp = new EmailOtp();
+        emailOtp.setOtp(otp);
+        LocalDateTime now = LocalDateTime.now();
+        emailOtp.setCreatedAt(now);
+        emailOtp.setExpiryTime(now.plusMinutes(5));
+        emailOtp.setConsumed(false);
+        emailOtp.setUserEntity(user);
+
+        emailOtpRepository.save(emailOtp);
+
+        // Create event
+        ResendOtpEvent resendOtpEvent = ResendOtpEvent.newBuilder()
+                .setEmail(user.getEmailAddress())
+                .setFirstName(user.getFirstName())
+                .setOtp(emailOtp.getOtp())
+                .build();
+
+        // Send to kafka topic
+        kafkaTemplate.send("otp-resend-topic", resendOtpEvent);
+    }
 }
