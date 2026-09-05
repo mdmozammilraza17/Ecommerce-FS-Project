@@ -88,8 +88,6 @@ export default function Signup() {
             sessionStorage.setItem("email", formData.emailAddress);
             navigate("/verify-otp");
 
-            console.log(sessionStorage.getItem("email"));
-
         }
         catch (error) {
             showError(

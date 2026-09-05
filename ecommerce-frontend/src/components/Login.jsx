@@ -47,7 +47,7 @@ export default function Login() {
                         <form onSubmit={handleSubmit} className='loginForm'>
                             <div className="header-content">
                                 <div className="password-icon">
-                                    <FiLock className="lock-icon" />
+                                    <FiLock className="lock-icon-login" />
                                 </div>
                                 <div className="login-content">
                                     <h3>Login</h3>
