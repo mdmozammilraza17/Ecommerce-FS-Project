@@ -3,6 +3,7 @@ import "./BannerSlider.css";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
+import TopInfoBar from "./TopInfoBar";
 
 
 export default function BannerSlider() {
@@ -26,6 +27,7 @@ const [banners, setBanners] = useState ([]);
   },[]);
   
   return (
+    <>
     <Swiper
     className="banner-slider"
      modules={[Autoplay]}
@@ -50,5 +52,9 @@ const [banners, setBanners] = useState ([]);
       )
       )}
     </Swiper>
+    <div className="top-info-container">
+      <TopInfoBar/>
+    </div>
+    </>
   );
 }

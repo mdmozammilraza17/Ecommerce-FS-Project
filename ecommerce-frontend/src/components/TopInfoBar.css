@@ -9,12 +9,6 @@
         margin: -10px -10px;
     }
 
-
-    .social-icons
-    {
-        margin-top: -5px;
-    }
-
     .info-item p, 
     .info-item h4,
     .small-text,
@@ -35,12 +29,6 @@
         margin: 0;
         margin: -10px -10px;
 
-    }
-
-
-    .social-icons
-    {
-        margin-top: -5px;
     }
 
     .info-item p, 
@@ -64,12 +52,6 @@
 
     }
 
-
-    .social-icons
-    {
-        margin-top: -5px;
-    }
-
     .info-item p, 
     .info-item h4,
     .small-text,
@@ -84,12 +66,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 10px;
-    margin-right: 10px;
-    background-color: #FDF8F2;
+    background-color: #F1F9F2;
     box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     overflow-x: hidden;
     border-bottom: 1px solid #EAEAEA;
+    padding: 12px 24px;
 }
 
 .info-item
@@ -99,17 +80,19 @@
     gap: 10px;
 }
 
-.icon-circle
+.icon-leaf, .icon-shield-check, .icon-delivery, .icon-earphone, .icon-heart
 {
-    width: 55px;
-    height: 55px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: #f4faf3;
+    background: #F2F9F3;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #0a7b2e;
-    font-size: 22px;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 50%;
+    background-color: #087124;
 }
 
 .small-text
@@ -135,22 +118,7 @@
 
 .divider {
     width: 1px;
-    height: 50px;
+    height: 40px;
     background-color: #ddd;
     margin: 0 5px;
-}
-
-
-.social-icons
-{
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    font-size: 20px;
-    cursor: pointer;
-    transform: translateY(-2px);
-}
-
-.social-icons svg:hover {
-  color: green;
 }

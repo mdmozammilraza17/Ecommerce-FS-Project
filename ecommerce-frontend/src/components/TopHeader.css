@@ -1,0 +1,103 @@
+.top-header {
+    margin: 0;
+    padding: 0;
+}
+
+.top-header-container {
+    width: 100%;
+    height: 30px;
+    padding: 12px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #00490C;
+    color: #fff;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   Location
+========================= */
+
+.location-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.location-container p {
+    margin: 0;
+    font-weight: 400;
+}
+
+
+/* =========================
+   Free Delivery
+========================= */
+
+.free-delivery-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.free-delivery-container p {
+    margin: 0;
+    font-weight: 400;
+}
+
+.price {
+
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 2px;
+
+}
+
+.price svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* =========================
+   Utility Links
+========================= */
+
+.header-utility-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.download-app-icon,
+.track-order,
+.help-support {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.download-app-icon p,
+.track-order p,
+.help-support p {
+    margin: 0;
+    font-weight: 400;
+}
+
+
+/* =========================
+   Icons
+========================= */
+
+.location-container svg,
+.free-delivery-container svg,
+.download-app-icon svg,
+.track-order svg,
+.help-support svg {
+    font-size: 14px;
+}
