@@ -4,3 +4,10 @@
   height: auto;
   display: block;
 }
+
+.top-info-container
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}

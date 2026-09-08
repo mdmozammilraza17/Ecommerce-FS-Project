@@ -1,98 +1,77 @@
-import {
-  FaMapMarkerAlt,
-  FaChevronDown,
-  FaTruck,
-  FaTags,
-  FaShippingFast,
-  FaMobileAlt,
-  FaFacebookF,
-  FaInstagram,
-  FaWhatsapp,
-} from "react-icons/fa";
 
+import { CiDeliveryTruck, CiHeart } from "react-icons/ci";
+import { FaLeaf } from "react-icons/fa";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { SlEarphonesAlt } from "react-icons/sl";
 import "./TopInfoBar.css";
+
 
 export default function TopInfoBar() {
   return (
     <div className="top-info-bar">
 
-      {/* Location */}
+      {/* Fresh & Quality Products */}
       <div className="info-item">
-        <div className="icon-circle">
-          <FaMapMarkerAlt />
+        <div className="icon-leaf">
+          <FaLeaf/>
         </div>
-
         <div>
-          <p className="small-text">Delivery to</p>
           <h4>
-            Daltonganj, Jharkhand 822101 <FaChevronDown />
+            Fresh & Quality Products
           </h4>
         </div>
       </div>
 
       <div className="divider"></div>
 
-      {/* Free Delivery */}
+      {/* Safe and Secure Payments */}
       <div className="info-item">
-        <div className="icon-circle">
-          <FaTruck />
+        <div className="icon-shield-check">
+          <IoShieldCheckmarkOutline />
         </div>
 
         <div>
-          <h4>Free Delivery</h4>
-          <p>On orders above ₹499</p>
+          <h4>Safe & Secure Payments</h4>
         </div>
       </div>
 
       <div className="divider"></div>
 
-      {/* Best Prices */}
+      {/* Fast & Reliable Delivery */}
       <div className="info-item">
-        <div className="icon-circle">
-          <FaTags />
+        <div className="icon-delivery">
+          <CiDeliveryTruck />
         </div>
 
         <div>
-          <h4>Best Prices</h4>
-          <p>You won't find cheaper</p>
+          <h4>Fast & Reliable Delivery</h4>
         </div>
       </div>
 
       <div className="divider"></div>
 
-      {/* On Time Delivery */}
+      {/* 24/7 Customer Support */}
       <div className="info-item">
-        <div className="icon-circle">
-          <FaShippingFast />
+        <div className="icon-earphone">
+          <SlEarphonesAlt/>
         </div>
 
         <div>
-          <h4>On Time Delivery</h4>
-          <p>Lightning fast delivery</p>
+          <h4>24/7 Customer Support</h4>
         </div>
       </div>
 
       <div className="divider"></div>
 
-      {/* Download App */}
+      {/* Trusted by Thousands*/}
       <div className="info-item">
-        <div className="icon-circle">
-          <FaMobileAlt />
+        <div className="icon-heart">
+          <CiHeart />
         </div>
 
         <div>
-          <h4>Download App</h4>
-          <p>Get Extra 5% OFF</p>
+          <h4>Trusted by Thousands</h4>
         </div>
-      </div>
-
-      <div className="divider"></div>
-
-      {/* Social Icons */}
-      <div className="social-icons">
-        <FaFacebookF />
-        <FaInstagram />
-        <FaWhatsapp />
       </div>
 
     </div>

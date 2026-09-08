@@ -1,13 +1,13 @@
+import BannerSlider from "./BannerSlider";
 import Footer from "./Footer";
 import "./Footer.css";
-import BannerSlider from "./BannerSlider";
-import TopInfoBar from "./TopInfoBar";
 import Header from "./Header";
+import TopHeader from "./TopHeader";
 
 export default function Home() {
   return (
     <>
-      <TopInfoBar />
+    <TopHeader/>
       <Header/>      
       <BannerSlider />
       <Footer />
