@@ -3,10 +3,12 @@ package com.ecommerce.service.login;
 import com.ecommerce.dto.login.LoginRequestDTO;
 import com.ecommerce.dto.login.LoginResponseDTO;
 import com.ecommerce.dto.login.UserProfileResponseDTO;
+import com.ecommerce.entity.refreshToken.RefreshToken;
 import com.ecommerce.entity.registration.UserEntity;
 import com.ecommerce.exception.registration.InvalidCredentialsException;
 import com.ecommerce.security.CustomUserDetails;
 import com.ecommerce.security.jwt.JwtService;
+import com.ecommerce.service.refreshToken.RefreshTokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,10 +21,12 @@ public class LoginServiceImpl implements LoginService{
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
-    public LoginServiceImpl(AuthenticationManager authenticationManager, JwtService jwtService) {
+    public LoginServiceImpl(AuthenticationManager authenticationManager, JwtService jwtService, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
     }
 
     @Override
@@ -41,9 +45,13 @@ public class LoginServiceImpl implements LoginService{
 
                UserEntity user = principal.getUserEntity();
 
+               RefreshToken refreshToken =
+                       refreshTokenService.createRefreshToken(user);
+
                LoginResponseDTO response = new LoginResponseDTO();
 
                response.setAccessToken(token);
+               response.setRefreshToken(refreshToken.getToken());
                response.setExpiresIn(jwtService.getExpiration());
                response.setTokenType("Bearer");
                response.setUserId(user.getId());
