@@ -2,8 +2,10 @@ import { useSelector } from "react-redux";
 import './Header.css';
 import HeaderLogo from '../assets/STD-Grocery-Store.png';
 import { FiMenu, FiChevronDown, FiSearch, FiUser, FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { SlArrowDown } from "react-icons/sl";
+import { SlArrowUp } from "react-icons/sl";
+import ProfileDropDown from "./ProfileDropdown";
 
 export default function Header() {
 
@@ -62,18 +64,26 @@ export default function Header() {
                         <div className="profile-pic">
                             👤
                         </div>
-                        <div className="name">
-                            <h4>Hi, {user?.firstName}</h4>
-                            <p>{getGreeting()}</p>
 
+                        <div className="login-register">
+                            <div className="name">
+                                <h4>Hi, {user?.firstName}</h4>
+                                <p>{getGreeting()}</p>
+
+                            </div>
+                            <FiChevronDown />
+                            <ProfileDropDown />
                         </div>
-                        <FiChevronDown />
+
 
                     </div>) : (<div className="login-register">
                         <FiUser />
-                        <h4>
-                            <Link to="/login">Login / Register </Link>
-                        </h4>
+
+                        <span>Login</span>
+                        <SlArrowDown className="arrow-down" />
+                        <SlArrowUp className="arrow-up" />
+                        <ProfileDropDown />
+
                     </div>)}
 
                     <div className="cart-icon">
