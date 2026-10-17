@@ -4,10 +4,11 @@
 
 .profile-dropdown-container
 {
+    display: none;
     position: absolute;
-    top: 55px;
-    right: 0;
-    width: 180px;
+    top: 85px;
+    right: 40px;
+    width: 250px;
     background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -24,12 +25,127 @@
 
 .profile-dropdown-container li
 {
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    margin: 0;
+    padding: 0;
 }
 
 .profile-dropdown-container li:hover {
     background-color: #f5f5f5;
     border-radius: 8px;
+    color: #00490C;
+}
+
+.profile-dropdown-container li:hover h5{
+    font-weight: bold;
+}
+
+
+.profile-dropdown-container li:hover .login-icon,
+.profile-dropdown-container li:hover .profile-icon,
+.profile-dropdown-container li:hover .orders-icon,
+.profile-dropdown-container li:hover .location-icon,
+.profile-dropdown-container li:hover .wallet-icon,
+.profile-dropdown-container li:hover .list-icon,
+.profile-dropdown-container li:hover .refer-icon,
+.profile-dropdown-container li:hover .bell-icon,
+.profile-dropdown-container li:hover .help-icon,
+.profile-dropdown-container li:hover .logout-icon,
+.profile-dropdown-container li:hover .register-icon
+{
+    stroke-width: 1.5;
+}
+
+.login-register:hover .profile-dropdown-container
+{
+    display: block;
+}
+
+.login, .profile, .orders, .addresses, .wallets, .list,
+.refer-earn, .notifications, .help-support, .logout-div, .register
+{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    box-sizing: border-box;
+}
+
+.login-icon, .register-icon
+{
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.login-link
+{
+    flex: 1;
+}
+
+.login-link h5, .profile h5, .orders h5, .addresses h5, .wallets h5, .list h5,
+.refer-earn h5, .notifications h5, .help-support h5, .logout-div h5, .register h5
+{
+    margin: 0;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.login-link p, .register-link p
+{
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.login-arrow
+{
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.profile-icon, .orders-icon, .location-icon, .wallet-icon, .list-icon,
+.refer-icon, .bell-icon, .help-icon, .logout-icon
+{
+    font-size: 14px;
+    width: 25px;
+    flex-shrink: 0;
+}
+
+.icon-msg {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 18px;
+    height: 18px;
+
+    font-size: 10px;
+    font-weight: bold;
+    color: #fff;
+    background-color: green;
+
+    border-radius: 50%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.notifications h5 {
+    flex: 1;
+}
+
+.logout-div
+{
+    font-size: 14px;
+    width: 25px;
+    flex-shrink: 0;
+    color: red;
+}
+
+.register-link, .login-link
+{
+    text-decoration: none;
+}
+
+.register-icon, .register-link h5
+{
+    color: red;
 }

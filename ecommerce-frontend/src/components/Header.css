@@ -132,6 +132,12 @@
     text-decoration: none;
     color: inherit;
 }
+
+.login-register span
+{
+    padding: 12px 0;
+}
+
 .cart-icon {
     display: flex;
     align-items: center;
@@ -167,4 +173,24 @@
     color: white;
     font-size: 11px;
     border-radius: 50%;
+}
+
+.login-register .arrow-up
+{
+    display: none;
+}
+
+.login-register .arrow-down
+{
+    display: inline-block;
+}
+
+.login-register:hover .arrow-down
+{
+    display: none;
+}
+
+.login-register:hover .arrow-up
+{
+    display: inline-block;
 }
